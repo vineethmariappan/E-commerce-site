@@ -1,0 +1,28 @@
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-8">
+          <br> <br> <br>
+            <form (ngSubmit)="addProduct()" style="background-color: rgb(255, 255, 255); padding: 35px; border-radius: 30px;">
+                <div class="form-group">
+                  <label for="prodname">Product Name</label>
+                  <input type="text" (change)="onNameChanged($event)" class="form-control" id="prodname" placeholder="Enter product name">
+                </div>
+                <div class="form-group">
+                  <label for="catname">Category</label>
+                  <input type="text" (change)="onCategoryChanged($event)" class="form-control" id="catname" placeholder="Enter category">
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="text" (change)="onPriceChanged($event)" class="form-control" id="price" placeholder="Enter price">
+                  </div>
+                  <div class="form-group">
+                    <label for="fileup">Image</label>
+                    <input type="file" (change)="onImageChanged($event)" class="form-control" id="fileup" placeholder="Upload Image">
+                  </div>
+                <button type="submit" class="btn btn-info btn-round">Add product</button>
+              </form>
+              
+        </div>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="container">
+    <b>search results for "{{search_product}}"</b>
+</div>
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2 offset-1" style="background-color: rgb(249,249,249); border-radius: 20px; height: 500px;">
+            <br><b>Filters</b><br><br>
+                <ngb-accordion #acc="ngbAccordion" activeIds="config-panel-one" class="card-plain">
+                    <ngb-panel id="config-panel-one">
+                        <ng-template ngbPanelTitle>
+                            <a class="collapsed">
+                                Pricing
+                            <i class="now-ui-icons arrows-1_minimal-down"></i>
+                            </a>
+                        </ng-template>
+                        <ng-template ngbPanelContent>
+                            1000-2000
+                            3000-4000
+                        </ng-template>
+                    </ngb-panel>
+                    <ngb-panel>
+                        <ng-template ngbPanelTitle>
+                            <a class="collapsed">
+                                Customer Rating
+                            <i class="now-ui-icons arrows-1_minimal-down"></i>
+                            </a>
+                        </ng-template>
+                        <ng-template ngbPanelContent>
+                            Rating * 
+                        </ng-template>
+                    </ngb-panel>
+                    <ngb-panel>
+                        <ng-template ngbPanelTitle>
+                            <a class="collapsed">
+                                Offers
+                            <i class="now-ui-icons arrows-1_minimal-down"></i>
+                            </a>
+                        </ng-template>
+                        <ng-template ngbPanelContent>
+                            big mans day
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+        </div>
+        <div class="col-8">
+            <p *ngIf="loading">loading....</p>       
+            <div class="row" *ngIf="!loading">
+                <div class="col-4" *ngFor="let product of products" >
+                    <a style="color: black;" routerLink="/viewproduct/{{product.product_id}}">
+                    <div class="card">
+                        <!-- <p style="font-size: 100px;">IMAGE</p><br> -->
+                        <img style="width : 400px; height:200px" src="{{product.cover}}" alt="">
+                       <b style="font-size: 25px;padding:7px;">{{product.prod_name}}</b> <br>
+                       <b style="font-size: 16px;padding:7px;">₹{{product.price}}</b> <br>
+                    <button type="button" class="btn btn-warning btn-round btn-sm" routerLink="/search/{{product.category.category_name}}">{{product.category.category_name}}</button>
+                       <p>supplier : {{product.sup_id.sup_name}}</p>
+                    </div>
+                </a>
+            </div>
+
+    
+    
+        </div>
+        </div>
+    </div>
+</div>

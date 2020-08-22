@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-lg bg-info">
+<div class="container">
+    <div class="navbar-translate">
+        <a class="navbar-brand" href="#pablo">
+         <b style="font-size: 20px;">Vine<span style="color: rgb(255, 251, 0);">Kart</span></b> 
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-bar bar1"></span>
+            <span class="navbar-toggler-bar bar2"></span>
+            <span class="navbar-toggler-bar bar3"></span>
+         </button>
+         
+
+</div>
+    <div class="collapse navbar-collapse" id="navigation">
+        <form (ngSubmit)="start_search()">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active" style="padding-left: 60px;">
+                
+                <div class="form-group"> 
+                    <input [(ngModel)]="search_name" name="search_field" style="background-color: white;" type="text" value="" placeholder="Search products..." class="form-control" />
+                </div>
+            </li>
+            <li class="nav-item active">
+            <button type="submit" class="btn btn-neutral btn-sm btn-just-icon" style="background-color: transparent; color: white; top: -10%; position: relative;"><i class="fa fa-search"></i></button>
+        </li>
+        </ul>
+    </form>
+    </div>
+ 
+    <div class="collapse navbar-collapse" id="navigation">
+        <ul class="navbar-nav ml-auto">
+            <!-- <button type="button" class="btn btn-neutral btn-round btn-sm"><p style="color: black;">Login</p></button> -->
+            
+            <li class="nav-item">
+                <a class="nav-link" href="#pablo">
+                    <p style="font-size: 15px;">Home</p>
+                </a>
+            </li>
+            <li class="nav-item" style="padding-left: 15px;">
+                <a class="nav-link" href="#pablo">
+                    <p style="font-size: 15px;"> <i class="fa fa-sign-in"></i> Login</p>
+                </a>
+            </li>
+            <li class="nav-item" style="padding-left: 15px;">
+                <a class="nav-link" href="#pablo">
+                    <p style="font-size: 15px;"> <i class="fa fa-shopping-cart"></i> Cart</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+</nav>
