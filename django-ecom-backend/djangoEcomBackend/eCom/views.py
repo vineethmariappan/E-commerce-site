@@ -2,17 +2,33 @@ from django.shortcuts import render
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import Customer_detail,Product_detail,Supplier,Order_list,Payment,Wish_List,Category
-from .serializers import Customer_detail_Serializer, Supplier_Serializer, Payment_Serializer, Product_detail_Serializer, Order_list_Serializer, Wish_List_Serializer, Category_Serializer
+from .serializers import Customer_detail_Serializer, Supplier_Serializer, Payment_Serializer, Product_detail_Serializer, Order_list_Serializer, Wish_List_Serializer, Category_Serializer, Users_Serializer
 from rest_framework.filters import SearchFilter,OrderingFilter
 from django.http import HttpResponse
-from knox.models import AuthToken
 from rest_framework import generics, permissions
+class UserViewSet(viewsets.ModelViewSet):
+    queryset=User.objects.all()
+    serializer_class = Users_Serializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, )
 
 class Customer_detail_ViewSet(viewsets.ModelViewSet):
     queryset=Customer_detail.objects.all()
     serializer_class=Customer_detail_Serializer
+    def create(self, request):
+        try:
+            usrobj=Customer_detail.objects.get(email=request.data['email']) # check if email exists
+        except Customer_detail.DoesNotExist:
+            usrobj=None
+        if usrobj:
+             return HttpResponse({'message' : 'Customer user already exists'},status=406)
+        Customer_detail.objects.create(username=request.data['username'],user_password=request.data['user_password'],email=request.data['email'],address=request.data['address'],vinecoins=0)
+        return HttpResponse(status=200)
+        # return HttpResponse({'message' : "User Created"},status=200)
 
 class Product_detail_ViewSet(viewsets.ModelViewSet):
     queryset=Product_detail.objects.all()
@@ -38,6 +54,9 @@ class Product_detail_ViewSet(viewsets.ModelViewSet):
 class Supplier_ViewSet(viewsets.ModelViewSet):
     queryset=Supplier.objects.all()
     serializer_class=Supplier_Serializer
+    def create(self, request):
+        Product_detail.objects.create(sup_name="vineeth",sup_email="email",sup_address="asd",sup_password="passswa")
+        return HttpResponse({'message' : 'Supplier Registered'},status=200)
 
 class Order_list_ViewSet(viewsets.ModelViewSet):
     queryset=Order_list.objects.all()

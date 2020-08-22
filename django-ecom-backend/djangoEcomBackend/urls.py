@@ -12,11 +12,14 @@ router.register(r'order_list',views.Order_list_ViewSet)
 router.register(r'payment',views.Payment_ViewSet)
 router.register(r'wish_list',views.Wish_List_ViewSet)
 router.register(r'category',views.Category_ViewSet)
+router.register(r'users',views.UserViewSet)
 from django.conf.urls.static import static
 from django.conf import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path(r'auth/',ObtainAuthToken.as_view())
 ]
 
 urlpatterns+= static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

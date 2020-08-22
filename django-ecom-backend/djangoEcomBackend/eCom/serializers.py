@@ -1,7 +1,10 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from .models import Customer_detail,Product_detail,Supplier,Order_list,Payment,Wish_List,Category
-
+class Users_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
+        fields=['username','password']
 class Category_Serializer(serializers.ModelSerializer):
     class Meta:
         model=Category

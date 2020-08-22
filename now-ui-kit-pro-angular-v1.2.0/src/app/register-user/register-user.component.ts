@@ -24,6 +24,7 @@ export class RegisterUserComponent implements OnInit {
   registerUser(){
     this.api.registerUser(this.register).subscribe(data=>{
       console.log(data);
+      alert("Account successfully created ! ")
     },error=>{
       console.log(error);
     });

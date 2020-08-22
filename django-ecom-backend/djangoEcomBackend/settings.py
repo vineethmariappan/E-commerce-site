@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'djangoEcomBackend.eCom',
     'corsheaders',
-    # 'rest_framework.authtoken',
-    'knox'
+    'rest_framework.authtoken',
+    'rest_framework'
 
 ]
 
@@ -78,8 +78,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'djangoEcomBackend.wsgi.application'
 
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend',
-    'knox.auth.TokenAuthentication'
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'
     ]
 }
 # Database
