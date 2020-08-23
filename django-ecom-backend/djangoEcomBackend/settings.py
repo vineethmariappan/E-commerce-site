@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'djangoEcomBackend.eCom',
     'corsheaders',
     'rest_framework.authtoken',
-    'rest_framework'
+    'rest_framework',
 
 ]
 
@@ -74,7 +74,7 @@ TEMPLATES = [
         },
     },
 ]
-
+AUTH_USER_MODEL = 'eCom.Account'
 WSGI_APPLICATION = 'djangoEcomBackend.wsgi.application'
 
 REST_FRAMEWORK = {

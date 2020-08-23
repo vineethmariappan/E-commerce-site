@@ -13,7 +13,8 @@ export class RegisterSupplierComponent implements OnInit {
     sup_name :"",
     sup_password : "",
     sup_address : "",
-
+    is_supplier : true,
+    is_customer : false,
   }
   constructor(private api : ApiService) { }
 

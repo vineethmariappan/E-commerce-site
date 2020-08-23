@@ -54,7 +54,8 @@
                        <b style="font-size: 25px;padding:7px;">{{product.prod_name}}</b> <br>
                        <b style="font-size: 16px;padding:7px;">₹{{product.price}}</b> <br>
                     <button type="button" class="btn btn-warning btn-round btn-sm" routerLink="/search/{{product.category.category_name}}">{{product.category.category_name}}</button>
-                       <p>supplier : {{product.sup_id.sup_name}}</p>
+                       <p>supplier : {{product.sup_id.username}}</p>
+                       <p>supplier location: {{product.sup_id.sup_id.sup_address}}</p>
                     </div>
                 </a>
             </div>

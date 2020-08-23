@@ -21,7 +21,7 @@ export class ApiService {
     const uploadData=new FormData();
     uploadData.append('prod_name',product_name);
     uploadData.append('availability',"1");
-    uploadData.append('sup_id',"1");
+    uploadData.append('sup_id',"7"); // got to use serives like sessions to pass sup_id dynamically
     uploadData.append('category',category);
     uploadData.append('price',price);   
     uploadData.append('cover',Image, Image.name);   
@@ -30,9 +30,9 @@ export class ApiService {
    return this.http.post(this.baseurl + '/product_detail/',uploadData);
   }
   registerUser(UserData){
-    return this.http.post(this.baseurl + '/customer_detail/',UserData);
+    return this.http.post(this.baseurl + '/users/',UserData);
   }
   registerSupplier(SupplierData){
-    return this.http.post(this.baseurl + '/supplier/',SupplierData);
+    return this.http.post(this.baseurl + '/users/',SupplierData);
   }
 }

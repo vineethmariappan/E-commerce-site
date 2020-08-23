@@ -14,6 +14,8 @@ export class RegisterUserComponent implements OnInit {
     user_password : "",
     vinecoins: 0,
     address : "",
+    is_customer : true,
+    is_supplier : false
 
   }
   
