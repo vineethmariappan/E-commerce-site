@@ -11,6 +11,10 @@ from rest_framework.filters import SearchFilter,OrderingFilter
 from django.http import HttpResponse
 from rest_framework import generics, permissions
 from django.contrib.auth import get_user_model # added custom user 
+from django.contrib.auth.hashers import make_password #by default django stores encryrted password, we encrypt the password that user provides as we explicity post new user account into db, if we dont encrypt then we'll have problem getting token auth since django by default decrypts the provided password when user tries to get token logging in
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 class UserViewSet(viewsets.ModelViewSet):
     User=get_user_model() 
     queryset=User.objects.all()
@@ -21,26 +25,26 @@ class UserViewSet(viewsets.ModelViewSet):
          User=get_user_model()  # have to initialize whenever we want to use our custom user model
          if request.data['is_customer']:
             Customer_detail.objects.create(address=request.data['address'],vinecoins=0)
-            new_cust=Customer_detail.objects.get(address=request.data['address'])
-            User.objects.create(is_customer=True,email=request.data['email'],password=request.data['user_password'],username=request.data['username'],cust_id=new_cust)
+            new_cust=Customer_detail.objects.get(address=request.data['address']) # users have same address face issues in creating account got to fix it.
+            User.objects.create(is_customer=True,email=request.data['email'],password=make_password(request.data['user_password']),username=request.data['username'],cust_id=new_cust)
          elif request.data['is_supplier']:
             Supplier.objects.create(sup_address=request.data['sup_address'])
             new_sup=Supplier.objects.get(sup_address=request.data['sup_address'])
-            User.objects.create(is_supplier=True,email=request.data['sup_email'],password=request.data['sup_password'],username=request.data['sup_name'],sup_id=new_sup)
+            User.objects.create(is_supplier=True,email=request.data['sup_email'],password=make_password(request.data['sup_password']),username=request.data['sup_name'],sup_id=new_sup)
          return HttpResponse(status=200)
 
-class Customer_detail_ViewSet(viewsets.ModelViewSet):
-    queryset=Customer_detail.objects.all()
-    serializer_class=Customer_detail_Serializer
-    def create(self, request):
-        try:
-            usrobj=Customer_detail.objects.get(email=request.data['email']) # check if email exists
-        except Customer_detail.DoesNotExist:
-            usrobj=None
-        if usrobj:
-             return HttpResponse({'message' : 'Customer user already exists'},status=406)
-        Customer_detail.objects.create(username=request.data['username'],user_password=request.data['user_password'],email=request.data['email'],address=request.data['address'],vinecoins=0)
-        return HttpResponse(status=200)
+# class Customer_detail_ViewSet(viewsets.ModelViewSet):
+#     queryset=Customer_detail.objects.all()
+#     serializer_class=Customer_detail_Serializer
+#     def create(self, request):
+#         try:
+#             usrobj=Customer_detail.objects.get(email=request.data['email']) # check if email exists
+#         except Customer_detail.DoesNotExist:
+#             usrobj=None
+#         if usrobj:
+#              return HttpResponse({'message' : 'Customer user already exists'},status=406)
+#         Customer_detail.objects.create(username=request.data['username'],user_password=request.data['user_password'],email=request.data['email'],address=request.data['address'],vinecoins=0)
+#         return HttpResponse(status=200)
         # return HttpResponse({'message' : "User Created"},status=200)
 
 class Product_detail_ViewSet(viewsets.ModelViewSet):
@@ -48,6 +52,8 @@ class Product_detail_ViewSet(viewsets.ModelViewSet):
     serializer_class=Product_detail_Serializer
     filter_backends= [SearchFilter, OrderingFilter]
     search_fields=['prod_name','category__category_name']
+    # authentication_classes = (TokenAuthentication,) # view products only if user is registered
+    # permission_classes = (IsAuthenticated, )
     def create(self, request):
         cover=request.data['cover']
         prod_name=request.data['prod_name']   
@@ -55,19 +61,22 @@ class Product_detail_ViewSet(viewsets.ModelViewSet):
         category=request.data['category']
         price=int(request.data['price'])
         rating=int(request.data['rating'])
-        supplier_id=int(request.data['sup_id'])
+        print(request.data['sup_id'])
+        supplier_id=request.data['sup_id']
         print(prod_name)
         print(availability)
         print(price)
         User=get_user_model()
-        sup_obj = User.objects.get(id=supplier_id)
+        sup_obj = User.objects.get(sup_id=supplier_id)
         catag_obj = Category.objects.get(category_name = category)
-        Product_detail.objects.create(prod_name=prod_name,cover=cover,availability=1,price=price,rating=1,category=catag_obj,sup_id=sup_obj)
+        Product_detail.objects.create(prod_name=prod_name,cover=cover,availability=availability,price=price,rating=1,category=catag_obj,sup_id=sup_obj)
         return HttpResponse({'message' : 'Product Created'},status=200)
 
 class Supplier_ViewSet(viewsets.ModelViewSet):
     queryset=Supplier.objects.all()
     serializer_class=Supplier_Serializer
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated, )
     def create(self, request):
         Product_detail.objects.create(sup_name="vineeth",sup_email="email",sup_address="asd",sup_password="passswa")
         return HttpResponse({'message' : 'Supplier Registered'},status=200)
@@ -88,5 +97,31 @@ class Payment_ViewSet(viewsets.ModelViewSet):
 class Wish_List_ViewSet(viewsets.ModelViewSet):
     queryset=Wish_List.objects.all()
     serializer_class=Wish_List_Serializer
+
+@api_view(['GET','POST'])
+def find_user(request,email): #returns the id of the given email
+        User=get_user_model()
+        try:
+            user=User.objects.get(email=email)
+        except:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+        serializer=Users_Serializer(user)
+        return Response(serializer.data)
+
+@api_view(['GET','POST'])
+def supplier_products(request,email): #returns products of the supplier
+        User=get_user_model()
+        try:
+            supplier=User.objects.get(email=email);
+            print(supplier)
+            products=Product_detail.objects.all();
+            products=products.filter(sup_id=supplier)
+            print(products) #able to fetch if theres only one product
+        except:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+        serializer=Product_detail_Serializer(products, many=True)
+        return Response(serializer.data)
+
+
 
 

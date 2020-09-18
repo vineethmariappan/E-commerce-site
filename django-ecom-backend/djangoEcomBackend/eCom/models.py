@@ -74,7 +74,7 @@ class Product_detail(models.Model):
     product_id=models.AutoField(primary_key=True)
     prod_name=models.CharField(max_length=256)
     # sup_id=models.ForeignKey('Supplier',null=True, on_delete=models.CASCADE,blank=True)
-    sup_id=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, on_delete=models.CASCADE,blank=True) #supplier user account 
+    sup_id=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, on_delete=models.CASCADE,blank=True) #supplier user account, user we could say
     availability=models.IntegerField()
     category=models.ForeignKey('Category',null=True,on_delete=models.CASCADE,blank=True)
     price=models.IntegerField()

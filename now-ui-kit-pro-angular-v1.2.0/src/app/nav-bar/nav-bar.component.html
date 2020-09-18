@@ -36,14 +36,27 @@
                     <p style="font-size: 15px;">Home</p>
                 </a>
             </li>
-            <li class="nav-item" style="padding-left: 15px;">
-                <a class="nav-link" href="#pablo">
+
+            <li *ngIf="!log" class="nav-item" style="padding-left: 15px;">
+                <a class="nav-link"  routerLink="/userlogin/">
                     <p style="font-size: 15px;"> <i class="fa fa-sign-in"></i> Login</p>
                 </a>
             </li>
-            <li class="nav-item" style="padding-left: 15px;">
+
+            <li *ngIf="log" class="nav-item" style="padding-left: 15px;">
+                <a class="nav-link" (click)="logout()" routerLink="/">
+                    <p style="font-size: 15px;"> <i class="fa fa-sign-in"></i> Logout</p>
+                </a>
+            </li>
+
+            <li *ngIf="log && !isSupplier" class="nav-item" style="padding-left: 15px;">
                 <a class="nav-link" href="#pablo">
                     <p style="font-size: 15px;"> <i class="fa fa-shopping-cart"></i> Cart</p>
+                </a>
+            </li>
+            <li *ngIf="log && isSupplier" class="nav-item" style="padding-left: 15px;">
+                <a class="nav-link" routerLink="/dashboard" href="#pablo">
+                    <p style="font-size: 15px;"> <i class="fa fa-area-chart" aria-hidden="true"></i> Dashboard</p>
                 </a>
             </li>
         </ul>

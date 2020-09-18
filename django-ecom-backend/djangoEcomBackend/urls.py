@@ -5,7 +5,7 @@ from django.urls import include
 from djangoEcomBackend.eCom import views
 from rest_framework.authtoken.views import ObtainAuthToken
 router=routers.DefaultRouter()
-router.register(r'customer_detail',views.Customer_detail_ViewSet)
+# router.register(r'customer_detail',views.Customer_detail_ViewSet)
 router.register(r'product_detail',views.Product_detail_ViewSet)
 router.register(r'supplier',views.Supplier_ViewSet)
 router.register(r'order_list',views.Order_list_ViewSet)
@@ -19,7 +19,9 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path(r'auth/',ObtainAuthToken.as_view())
+    path(r'auth/',ObtainAuthToken.as_view()),
+    path('find_user/<str:email>/',views.find_user),
+    path('supplier_products/<str:email>/',views.supplier_products)
 ]
 
 urlpatterns+= static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

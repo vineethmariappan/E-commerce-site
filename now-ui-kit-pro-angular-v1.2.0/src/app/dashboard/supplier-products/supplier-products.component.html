@@ -1,0 +1,27 @@
+<br> <br> <br>
+<div class="container">
+<table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Product Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col" width="60px;"></th>
+        <th scope="col" width="60px;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <th scope="row">1</th>
+        <td>{{product.prod_name}}</td>
+        <td><input [(ngModel)]="product.price" class="form-control" id="price" aria-describedby="emailHelp" placeholder=""></td>
+        <td><input [(ngModel)]="product.availability" class="form-control" id="availability" aria-describedby="emailHelp" placeholder=""></td>
+       <td><button type="button" class="btn btn-success">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
+       <td><button type="button" class="btn btn-danger">Remove <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></button></td> 
+      </tr>
+
+      
+    </tbody>
+  </table>
+</div>

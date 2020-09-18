@@ -2,7 +2,9 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from .models import Customer_detail,Product_detail,Supplier,Order_list,Payment,Wish_List,Category
 from django.contrib.auth import get_user_model
-    
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 class Category_Serializer(serializers.ModelSerializer):
     class Meta:
         model=Category
