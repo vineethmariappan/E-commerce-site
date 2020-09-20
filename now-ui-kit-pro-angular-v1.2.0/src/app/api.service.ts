@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
+import { identifierModuleUrl } from '@angular/compiler';
 @Injectable({
   providedIn: 'root'
 })
@@ -60,7 +61,7 @@ export class ApiService {
   addOneProduct(product_name : string, category : string, price : string, Image : File, supplier_id : string,availability : string) : Observable<any>{
     const uploadData=new FormData();
     uploadData.append('prod_name',product_name);
-    uploadData.append('availability',"1");
+    // uploadData.append('availability',"1");
       uploadData.append('sup_id',supplier_id); // got to use serives like sessions to pass sup_id dynamically
       uploadData.append('category',category);
       uploadData.append('price',price);   
@@ -83,8 +84,29 @@ export class ApiService {
   getSupplierProducts(email){
     return this.http.get(this.baseurl + /supplier_products/ + email,{headers : this.httpHeaders});
   }
-  // togglelogin(){
-  //   this.logged=!this.logged;
 
-  // }
+  deleteSupplierProduct(id){
+    return this.http.delete(this.baseurl + /product_detail/ + id);
+  }
+  getSupplierProduct(id): Observable<any>{
+    return this.http.get(this.baseurl + /product_detail/ + id);
+  }
+  UpdateSupplierProduct(prod_id : string,product_name : string, category : string, price : string, Image : File, supplier_id : string,availability : string){
+    const uploadData=new FormData();
+    uploadData.append('sup_id',supplier_id); 
+    uploadData.append('prod_name',product_name);
+      uploadData.append('category',category);
+      uploadData.append('price',price);   
+      if(typeof(Image)!="string"){
+        console.log(Image +" this is");
+        uploadData.append('cover',Image, Image.name);   
+      }
+      // console.log(Image+ " "+ Image.name);
+      uploadData.append('availability',availability);
+    return this.http.put(this.baseurl + /product_detail/ + prod_id + '/',uploadData);
+  }
+  getCategories(){
+    return this.http.get(this.baseurl + /category/,{headers : this.httpHeaders});
+  }
+
 }

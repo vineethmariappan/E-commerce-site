@@ -56,20 +56,51 @@ class Product_detail_ViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated, )
     def create(self, request):
         cover=request.data['cover']
+        print(cover)
         prod_name=request.data['prod_name']   
         availability=int(request.data['availability'])
         category=request.data['category']
         price=int(request.data['price'])
         rating=int(request.data['rating'])
-        print(request.data['sup_id'])
         supplier_id=request.data['sup_id']
-        print(prod_name)
-        print(availability)
-        print(price)
         User=get_user_model()
         sup_obj = User.objects.get(sup_id=supplier_id)
         catag_obj = Category.objects.get(category_name = category)
         Product_detail.objects.create(prod_name=prod_name,cover=cover,availability=availability,price=price,rating=1,category=catag_obj,sup_id=sup_obj)
+        return HttpResponse({'message' : 'Product Created'},status=200)
+
+    # def retrieve(self,request, pk=None): # used for both put(updates one obj based on pk) and get (gets one obj based on pk)
+	# 	queryset = Product_detail.objects.all()
+	# 	product = get_object_or_404(queryset,pk=pk)	
+
+    
+    def update(self, request, pk=None):
+		# queryset = Product_detail.objects.all()
+		# product=self.get_object_or_404(queryset,pk=pk)
+        prod_name=request.data['prod_name']   
+        hasImage=True;
+        try:
+            if request.data['cover']:
+                cover=request.data['cover']
+        except:
+            hasImage=False;
+        # print(cover)
+        availability=int(request.data['availability'])
+        category=request.data['category']
+        price=int(request.data['price'])
+        # rating=int(request.data['rating'])
+        supplier_id=request.data['sup_id']
+        User=get_user_model()
+        sup_obj = User.objects.get(sup_id=supplier_id)
+        catag_obj = Category.objects.get(category_name = category)
+        if hasImage:
+            Product_detail.objects.create(prod_name="temp_img_update",cover=cover,availability=availability,price=price,rating=1,category=catag_obj,sup_id=sup_obj)
+            product_temp=Product_detail.objects.get(prod_name="temp_img_update",sup_id=sup_obj)
+            Product_detail.objects.filter(pk=pk).update(prod_name=prod_name,cover=product_temp.cover,availability=availability,price=price,category=catag_obj,sup_id=sup_obj)
+            Product_detail.objects.filter(prod_name="temp_img_update",sup_id=sup_obj).delete()
+        else:
+            Product_detail.objects.filter(pk=pk).update(prod_name=prod_name,availability=availability,price=price,category=catag_obj,sup_id=sup_obj)
+		
         return HttpResponse({'message' : 'Product Created'},status=200)
 
 class Supplier_ViewSet(viewsets.ModelViewSet):
@@ -116,7 +147,6 @@ def supplier_products(request,email): #returns products of the supplier
             print(supplier)
             products=Product_detail.objects.all();
             products=products.filter(sup_id=supplier)
-            print(products) #able to fetch if theres only one product
         except:
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
         serializer=Product_detail_Serializer(products, many=True)

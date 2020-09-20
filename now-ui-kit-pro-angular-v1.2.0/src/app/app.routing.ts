@@ -10,9 +10,11 @@ import { ViewproductComponent } from './viewproduct/viewproduct.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SupplierProductsComponent } from './dashboard/supplier-products/supplier-products.component';
+import { AppComponent } from './app.component';
 const routes: Routes =[
     { path: 'search/:search_name', component : SearchResultComponent },
     {path : 'addproduct', component : AddProductComponent},
+    {path : 'addproduct/:product_id', component : AddProductComponent},
     {path : 'registeruser' , component : RegisterUserComponent},
     {path : 'registersupplier' , component : RegisterSupplierComponent},
     {path : 'viewproduct/:id' , component : ViewproductComponent},

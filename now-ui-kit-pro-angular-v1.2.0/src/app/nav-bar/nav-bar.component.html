@@ -1,8 +1,9 @@
-<nav class="navbar navbar-expand-lg bg-info">
-<div class="container">
+<nav class="navbar navbar-expand-lg bg-info fixed-top">
+<!-- changed navbar-transparent behaviour at sass/now-ui-kit/_navbar.scss -->
+    <div class="container">
 
         <a class="navbar-brand" href="#pablo">
-         <b style="font-size: 20px;">Vine<span style="color: rgb(255, 251, 0);">Kart</span></b> 
+         <b style="font-size: 20px;">V<span style="color: rgb(255, 251, 0);">Kart</span></b> 
         </a>
         
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +33,7 @@
             <!-- <button type="button" class="btn btn-neutral btn-round btn-sm"><p style="color: black;">Login</p></button> -->
             
             <li class="nav-item">
-                <a class="nav-link" href="#pablo">
+                <a class="nav-link" routerLink="/">
                     <p style="font-size: 15px;">Home</p>
                 </a>
             </li>
@@ -42,13 +43,6 @@
                     <p style="font-size: 15px;"> <i class="fa fa-sign-in"></i> Login</p>
                 </a>
             </li>
-
-            <li *ngIf="log" class="nav-item" style="padding-left: 15px;">
-                <a class="nav-link" (click)="logout()" routerLink="/">
-                    <p style="font-size: 15px;"> <i class="fa fa-sign-in"></i> Logout</p>
-                </a>
-            </li>
-
             <li *ngIf="log && !isSupplier" class="nav-item" style="padding-left: 15px;">
                 <a class="nav-link" href="#pablo">
                     <p style="font-size: 15px;"> <i class="fa fa-shopping-cart"></i> Cart</p>
@@ -59,8 +53,21 @@
                     <p style="font-size: 15px;"> <i class="fa fa-area-chart" aria-hidden="true"></i> Dashboard</p>
                 </a>
             </li>
+            <li *ngIf="log" class="nav-item" style="padding-left: 15px;">
+                <a class="nav-link" (click)="logout()" routerLink="/">
+                    <p style="font-size: 15px;"> <i class="fa fa-sign-in"></i> Logout</p>
+                </a>
+            </li>
+
+           
         </ul>
     </div>
 
 </div>
 </nav>
+<!-- <style>
+    .navbar-transparent{
+        color: blue !important;
+        display: block !important;
+    }
+</style> -->

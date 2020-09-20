@@ -1,30 +1,47 @@
+<br> <br> <br> <br> <br> <br>
 
 <div class="container">
     <div class="row justify-content-center">
+      <!-- <div class="col-4">
+        <br> <br> <br>  
+        <img *ngIf="isUpdate" src="{{this.Image}}" alt="">
+      </div> -->
         <div class="col-8">
-          <br> <br> <br>
-            <form (ngSubmit)="addProduct()" style="background-color: rgb(255, 255, 255); padding: 35px; border-radius: 30px;">
+          <h2 *ngIf="!isUpdate">Add a new Product</h2>
+          <h2 *ngIf="isUpdate">Update Product</h2>
+          <!-- <p>{{product_edit_id}}</p> -->
+            <form (ngSubmit)="addProduct()" style="background-color: rgb(255, 255, 255); padding: 35px; border-radius: 17px;box-shadow: 2px 2px 10px gainsboro;">
                 <div class="form-group">
                   <label for="prodname">Product Name</label>
-                  <input type="text" (change)="onNameChanged($event)" class="form-control" id="prodname" placeholder="Enter product name">
+                  <input type="text" [(ngModel)]="product_name" name="someprodname" class="form-control" id="prodname" placeholder="Enter product name">
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="catname">Category</label>
                   <input type="text" (change)="onCategoryChanged($event)" class="form-control" id="catname" placeholder="Enter category">
-                </div>
+                </div> -->
+
                 <div class="form-group">
                     <label for="price">Price</label>
-                    <input type="text" (change)="onPriceChanged($event)" class="form-control" id="price" placeholder="Enter price">
+                    <input type="text" [(ngModel)]="price" name="someprice" class="form-control" id="price" placeholder="Enter price">
                   </div>
                   <div class="form-group">
                     <label for="price">Quantity</label>
-                    <input type="text" (change)="onQuantityChanged($event)" class="form-control" id="price" placeholder="Enter Quantity">
+                    <input type="text" [(ngModel)]="quantity" name="somequantity" class="form-control" id="price" placeholder="Enter Quantity">
+                  </div>
+                  <!-- <p>selected : {{category}}</p> -->
+                  <div class="form-group">
+                    <label for="inputState">Category</label>
+                    <select id="inputState" [(ngModel)]="category" name="somecat" class="form-control">
+                      <option selected *ngFor="let cat of categories">{{cat.category_name}}</option>
+                    </select>
                   </div>
                   <div class="form-group">
                     <label for="fileup">Image</label>
-                    <input type="file" (change)="onImageChanged($event)" class="form-control" id="fileup" placeholder="Upload Image">
+                    <input type="file" (change)="onImageChanged($event)" name="somefile" class="form-control" id="fileup" placeholder="Upload Image">
                   </div>
-                <button type="submit" class="btn btn-info btn-round">Add product</button>
+
+                <button *ngIf="!isUpdate" type="submit" class="btn btn-info btn-round">Add product</button>
+                <button *ngIf="isUpdate" type="submit" class="btn btn-info btn-round">Update product</button>
               </form>
               
         </div>

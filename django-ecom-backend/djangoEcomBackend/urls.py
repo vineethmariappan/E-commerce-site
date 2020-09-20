@@ -19,6 +19,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('<int:pk>/', include(router.urls)), #for product update
     path(r'auth/',ObtainAuthToken.as_view()),
     path('find_user/<str:email>/',views.find_user),
     path('supplier_products/<str:email>/',views.supplier_products)

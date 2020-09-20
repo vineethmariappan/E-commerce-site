@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ApiService } from 'app/api.service';
 
 @Component({
@@ -8,9 +9,20 @@ import { ApiService } from 'app/api.service';
 })
 export class SupplierProductsComponent implements OnInit {
   products : any;
-  constructor(private api : ApiService) { }
+  url=this.api.baseurl;
+  constructor(private api : ApiService) { 
+    
+  }
   ngOnInit(): void {
     this.getProducts();
+
+  }
+  deleteSupplierProduct(id){
+    this.api.deleteSupplierProduct(id).subscribe(data =>{
+      if(!data)
+        this.getProducts();
+
+    });
   }
   getProducts(){
     var data = JSON.parse(localStorage.getItem('email'));
