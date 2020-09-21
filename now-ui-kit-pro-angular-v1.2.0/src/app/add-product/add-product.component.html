@@ -15,6 +15,10 @@
                   <label for="prodname">Product Name</label>
                   <input type="text" [(ngModel)]="product_name" name="someprodname" class="form-control" id="prodname" placeholder="Enter product name">
                 </div>
+                <div class="form-group">
+                  <label for="prodname">Product Description</label>
+                  <textarea  [(ngModel)]="product_description" name="someproddes" class="form-control" id="prodname" placeholder="Enter product description"></textarea>
+                </div>
                 <!-- <div class="form-group">
                   <label for="catname">Category</label>
                   <input type="text" (change)="onCategoryChanged($event)" class="form-control" id="catname" placeholder="Enter category">

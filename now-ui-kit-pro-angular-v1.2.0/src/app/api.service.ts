@@ -58,7 +58,7 @@ export class ApiService {
     return this.http.get(this.baseurl + "/product_detail/" + id,{ headers : this.httpHeaders});
   }
   supplier_id : Number;
-  addOneProduct(product_name : string, category : string, price : string, Image : File, supplier_id : string,availability : string) : Observable<any>{
+  addOneProduct(product_name : string, category : string, price : string, Image : File, supplier_id : string,availability : string,product_description:string ) : Observable<any>{
     const uploadData=new FormData();
     uploadData.append('prod_name',product_name);
     // uploadData.append('availability',"1");
@@ -67,6 +67,7 @@ export class ApiService {
       uploadData.append('price',price);   
       uploadData.append('cover',Image, Image.name);   
       uploadData.append('rating',"0");   
+      uploadData.append('product_description',product_description);   
       uploadData.append('availability',availability);
      return this.http.post(this.baseurl + '/product_detail/',uploadData);
   }
@@ -91,14 +92,15 @@ export class ApiService {
   getSupplierProduct(id): Observable<any>{
     return this.http.get(this.baseurl + /product_detail/ + id);
   }
-  UpdateSupplierProduct(prod_id : string,product_name : string, category : string, price : string, Image : File, supplier_id : string,availability : string){
+  UpdateSupplierProduct(prod_id : string,product_name : string, category : string, price : string, Image : File, supplier_id : string,availability : string,product_description : string){
     const uploadData=new FormData();
     uploadData.append('sup_id',supplier_id); 
     uploadData.append('prod_name',product_name);
       uploadData.append('category',category);
-      uploadData.append('price',price);   
-      if(typeof(Image)!="string"){
-        console.log(Image +" this is");
+      uploadData.append('price',price); 
+      uploadData.append('product_description',product_description);  
+      if(typeof(Image)!="string"){ // checks if we are posting a new image, new img are representing as FILE where old imgs are representing as dest string
+        // console.log(Image +" this is");
         uploadData.append('cover',Image, Image.name);   
       }
       // console.log(Image+ " "+ Image.name);

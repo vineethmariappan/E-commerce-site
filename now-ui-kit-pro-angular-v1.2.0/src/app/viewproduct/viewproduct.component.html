@@ -1,14 +1,52 @@
 <br><br>
-<div class="container">
+<div class="container" style="background-color: white; height: 2000px;">
+    <br><br> <br> <br>
     <div class="row justify-content-center">
-        <div class="col-4">
-            <br><br>
-            <img src="{{product_details.cover}}">
-            <button type="" class="btn btn-warning btn-round"><i class="fa fa-shopping-cart"></i>ADD TO CART</button>
-            <button type="" class="btn btn-success btn-round"><i class="fa fa-credit-card-alt"></i>BUY NOW</button>
+        <div class="col-4 justify-content-center" style="text-align: center;">
+            <img width="150px"src="{{product_details.cover}}"> <br> <br>
+            <button  type="" class="btn btn-warning btn-md btn-round"><i class="fa fa-shopping-cart"></i>ADD TO CART</button> 
+            <button  type="" class="btn btn-success btn-md btn-round"><i class="fa fa-credit-card-alt"></i>BUY NOW</button>
         </div>
         <div class="col-8">
-                <b style="font-size: 20px;">{{product_details.prod_name}}</b>
-        </div>
+                <!-- <p style="font-size:15px;color: grey;">home > {{product_details.category.category_name}}</p> -->
+                <h2 style="font-size: 20px;">{{product_details.prod_name}}</h2>
+               <h6 style="color: grey;"><b class="star" style="font-size: 10px;">{{product_details.rating}} <i  class="fa fa-star" aria-hidden="true"></i></b> 55,782 Ratings & 3,784 Reviews</h6> 
+                <h4 >Description</h4> 
+                <p style="padding : 10px;background-color: rgb(245, 245, 245);">{{product_details.product_description}}</p>
+                <br> <br>
+
+                <!-- RATING AND REVIEW SECTION STARTS HERE -->
+                    <h4>Ratings & Reviews</h4>
+                <div class="ratings" style="border:0.1px solid rgb(192, 192, 192); padding: 10px; border-radius: 7px 7px 1px 1px;">
+                 <b><b class="star" style="font-size: 10px;">5 <i  class="fa fa-star" aria-hidden="true"></i></b>  Great product</b> <!-- review heading -->
+                    <br>
+                 <p>Everything in this phone is awesome
+                    Battery is superb
+                    Screen is wide and long
+                    Camera qualities in this price range is awesome. You will able to capture photos in low light because you will get low light sensor
+                    Screen display is good
+                    You will be get DTS sound quality which will give you theatre like experience. You can customise DTS sound</p>
+                <b style="font-size: 15px;color: gray;">Vineeth Mariappan, <span style="font-size:13px"><p> Certified Buyer <i class="fa fa-check" aria-hidden="true"></i></p></span></b>
+                </div>
+                <div class="ratings" style="border:0.1px solid rgb(192, 192, 192); padding: 10px;">
+                    <b><b class="star" style="font-size: 10px;">5 <i  class="fa fa-star" aria-hidden="true"></i></b>  Brilliant</b> <!-- review heading -->
+                       <br>
+                    <p>Everything in this phone is awesome
+                       Battery is superb
+                       Screen is wide and long
+                       Camera qualities in this price range is awesome. You will able to capture photos in low light because you will get low light sensor
+                       Screen display is good
+                       You will be get DTS sound quality which will give you theatre like experience. You can customise DTS sound</p>
+                   <b style="font-size: 15px;color: gray;">Vineeth Mariappan, <span style="font-size:13px"><p> Certified Buyer <i class="fa fa-check" aria-hidden="true"></i></p></span></b>
+                   </div>
+                <!-- RATING AND REVIEW SECTION ENDS HERE -->
+
+         </div>
     </div>
+
 </div>
+<style>
+    .star{
+        color: white;background-color: #388e3c;padding: 2px; border-radius: 3px;padding-left:6px;padding-right:6px; 
+    }
+</style>

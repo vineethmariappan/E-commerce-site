@@ -16,7 +16,7 @@ export class AddProductComponent implements OnInit {
   categories : any;
   product_edit_id : Number;
   isUpdate=false;
- 
+  product_description : string;
   constructor(private api : ApiService,  private route : ActivatedRoute) { 
     this.route.params.subscribe(params =>{
       this.product_edit_id=params['product_id'];
@@ -52,11 +52,13 @@ export class AddProductComponent implements OnInit {
   }
   getProductDetailsForUpdate(){
       this.api.getSupplierProduct(this.product_edit_id).subscribe(responseData =>{
+        console.log(responseData);
        this.category=responseData.category.category_name;
        this.product_name =responseData.prod_name;
        this.price =responseData.price;
        this.Image=responseData.cover;
        this.quantity=responseData.availability;
+       this.product_description=responseData.product_description;
       });
   }
   reset(){ 
@@ -65,12 +67,13 @@ export class AddProductComponent implements OnInit {
     this.price="";
     this.Image=null;
     this.quantity=null;
+    this.product_description="";
   }
   addProduct(){
     var num=new Number(this.quantity);
     if(this.isUpdate){
       var id= new Number(this.product_edit_id);
-      this.api.UpdateSupplierProduct(id.toString(),this.product_name,this.category,this.price,this.Image,this.supplier_id,num.toString()).subscribe(data =>{
+      this.api.UpdateSupplierProduct(id.toString(),this.product_name,this.category,this.price,this.Image,this.supplier_id,num.toString(),this.product_description).subscribe(data =>{
         console.log(data);
        alert("Product updated Successfully");
 
@@ -81,7 +84,7 @@ export class AddProductComponent implements OnInit {
       console.log("YES");
     }
     else{
-      this.api.addOneProduct(this.product_name,this.category,this.price,this.Image,this.supplier_id,num.toString()).subscribe( data=>{
+      this.api.addOneProduct(this.product_name,this.category,this.price,this.Image,this.supplier_id,num.toString(),this.product_description).subscribe( data=>{
         console.log(data);
         alert(this.product_name +" added successfully");
         this.reset();

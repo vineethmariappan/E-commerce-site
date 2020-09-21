@@ -63,10 +63,11 @@ class Product_detail_ViewSet(viewsets.ModelViewSet):
         price=int(request.data['price'])
         rating=int(request.data['rating'])
         supplier_id=request.data['sup_id']
+        product_description=request.data['product_description']
         User=get_user_model()
         sup_obj = User.objects.get(sup_id=supplier_id)
         catag_obj = Category.objects.get(category_name = category)
-        Product_detail.objects.create(prod_name=prod_name,cover=cover,availability=availability,price=price,rating=1,category=catag_obj,sup_id=sup_obj)
+        Product_detail.objects.create(prod_name=prod_name,cover=cover,availability=availability,price=price,rating=1,category=catag_obj,sup_id=sup_obj,product_description=product_description)
         return HttpResponse({'message' : 'Product Created'},status=200)
 
     # def retrieve(self,request, pk=None): # used for both put(updates one obj based on pk) and get (gets one obj based on pk)
@@ -88,18 +89,19 @@ class Product_detail_ViewSet(viewsets.ModelViewSet):
         availability=int(request.data['availability'])
         category=request.data['category']
         price=int(request.data['price'])
+        product_description=request.data['product_description']
         # rating=int(request.data['rating'])
         supplier_id=request.data['sup_id']
         User=get_user_model()
         sup_obj = User.objects.get(sup_id=supplier_id)
         catag_obj = Category.objects.get(category_name = category)
         if hasImage:
-            Product_detail.objects.create(prod_name="temp_img_update",cover=cover,availability=availability,price=price,rating=1,category=catag_obj,sup_id=sup_obj)
-            product_temp=Product_detail.objects.get(prod_name="temp_img_update",sup_id=sup_obj)
-            Product_detail.objects.filter(pk=pk).update(prod_name=prod_name,cover=product_temp.cover,availability=availability,price=price,category=catag_obj,sup_id=sup_obj)
-            Product_detail.objects.filter(prod_name="temp_img_update",sup_id=sup_obj).delete()
+            Product_detail.objects.create(prod_name=prod_name+"_img_update",cover=cover,availability=availability,price=price,rating=1,category=catag_obj,sup_id=sup_obj,product_description=product_description)
+            product_temp=Product_detail.objects.get(prod_name=prod_name+"_img_update",sup_id=sup_obj)
+            Product_detail.objects.filter(pk=pk).update(prod_name=prod_name,cover=product_temp.cover,availability=availability,price=price,category=catag_obj,sup_id=sup_obj,product_description=product_description)
+            Product_detail.objects.filter(prod_name=prod_name+"_img_update",sup_id=sup_obj).delete()
         else:
-            Product_detail.objects.filter(pk=pk).update(prod_name=prod_name,availability=availability,price=price,category=catag_obj,sup_id=sup_obj)
+            Product_detail.objects.filter(pk=pk).update(prod_name=prod_name,availability=availability,price=price,category=catag_obj,sup_id=sup_obj,product_description=product_description)
 		
         return HttpResponse({'message' : 'Product Created'},status=200)
 
