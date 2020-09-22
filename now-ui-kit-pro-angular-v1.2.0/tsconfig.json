@@ -1,4 +1,5 @@
 {
+  "importHelpers": true,
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
@@ -17,5 +18,8 @@
       "dom"
     ],
     "module": "es2015"
-  }
+  },
+  "angularCompilerOptions": {
+    "enableIvy": false,
+ }
 }

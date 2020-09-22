@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start"
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+    "postinstall": "ngcc"
   },
   "private": true,
   "dependencies": {
@@ -27,14 +28,15 @@
     "@kolkov/ngx-gallery": "1.0.10",
     "@ng-bootstrap/ng-bootstrap": "5.0.0",
     "angular2-multiselect-dropdown": "4.2.7",
-    "bootstrap": "4.1.3",
+    "bootstrap": "^4.5.2",
     "copy-webpack-plugin": "5.0.0",
     "core-js": "2.6.5",
     "font-awesome": "4.7.0",
-    "jquery": "3.3.1",
+    "jquery": "^3.5.1",
     "jw-bootstrap-switch-ng2": "2.0.5",
     "ng2-nouislider": "1.7.13",
     "ngx-chips": "2.1.0",
+    "ngx-paypal": "^6.2.0",
     "nouislider": "12.1.0",
     "popper.js": "1.14.7",
     "rellax": "1.7.1",
@@ -43,7 +45,7 @@
     "zone.js": "0.8.29"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.900.4",
+    "@angular-devkit/build-angular": "^0.901.9",
     "@angular/cli": "9.0.4",
     "@angular/compiler-cli": "9.0.4",
     "@angular/language-service": "9.0.4",

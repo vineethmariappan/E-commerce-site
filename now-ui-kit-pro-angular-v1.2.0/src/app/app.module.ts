@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -16,6 +17,7 @@ import { ViewproductComponent } from './viewproduct/viewproduct.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SupplierProductsComponent } from './dashboard/supplier-products/supplier-products.component';
+import { CheckOutComponent } from './viewproduct/check-out/check-out.component';
 
 @NgModule({
     declarations: [
@@ -28,7 +30,8 @@ import { SupplierProductsComponent } from './dashboard/supplier-products/supplie
         ViewproductComponent,
         UserLoginComponent,
         DashboardComponent,
-        SupplierProductsComponent
+        SupplierProductsComponent,
+        CheckOutComponent
         
     ],
     imports: [
@@ -37,7 +40,9 @@ import { SupplierProductsComponent } from './dashboard/supplier-products/supplie
         FormsModule,
         RouterModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        NgxPayPalModule
+
     ],
     providers: [],
     bootstrap: [AppComponent]

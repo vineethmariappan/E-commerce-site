@@ -11,6 +11,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SupplierProductsComponent } from './dashboard/supplier-products/supplier-products.component';
 import { AppComponent } from './app.component';
+import { CheckOutComponent } from './viewproduct/check-out/check-out.component';
 const routes: Routes =[
     { path: 'search/:search_name', component : SearchResultComponent },
     {path : 'addproduct', component : AddProductComponent},
@@ -20,7 +21,8 @@ const routes: Routes =[
     {path : 'viewproduct/:id' , component : ViewproductComponent},
     {path : 'userlogin' , component : UserLoginComponent},
     {path : 'dashboard' , component : DashboardComponent},
-    {path : 'dashboard/supplier-products' , component : SupplierProductsComponent}
+    {path : 'dashboard/supplier-products' , component : SupplierProductsComponent},
+    {path : 'checkout' , component : CheckOutComponent}
 ];
 
 @NgModule({

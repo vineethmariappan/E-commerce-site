@@ -1,12 +1,18 @@
-<br> <br> <br> <br> <br> <br>
+<br> <br> <br> <br>
 <div class="container">
-  <h2 style="text-align: center;">Edit Product Details</h2>
-  <button type="button" style="float: right;" routerLink="/addproduct" class="btn btn-info btn-round">Add Product</button>
-  <p>{{product_edit_id}}</p>
+  <div class="row">
+    <div class="col-6">
+  <h4 style="float: left;">Edit Product Details</h4> 
+</div>
+<div class="col-6">
+  <button type="button" style="float: right;" routerLink="/addproduct" class="btn btn-info btn-round ">Add Product</button>
+</div>
+</div>
+  <!-- <p>{{product_edit_id}}</p> -->
 
-  <table class="table table-bordered table-hover" style="text-align: center;">
-    <thead class="thead-dark">
-      <tr>
+  <table class="table table-hover " style="text-align: center;box-shadow: 2px 2px 10px gainsboro;">
+  <thead class="thead bg-info">
+      <tr style="color: white;">
         <th scope="col">#</th>
         <th scope="col" >Product Image</th>
         <th scope="col">Product Name</th>
@@ -23,8 +29,8 @@
         <td>{{product.prod_name}}</td>
         <td><input disabled [(ngModel)]="product.price" class="form-control" id="price" aria-describedby="emailHelp" placeholder=""></td>
         <td><input disabled [(ngModel)]="product.availability" class="form-control" id="availability" aria-describedby="emailHelp" placeholder=""></td>
-       <td><button  routerLink="/addproduct/{{product.product_id}}" type="button" class="btn btn-success">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
-       <td><button (click)="deleteSupplierProduct(product.product_id)" type="button" class="btn btn-danger">Remove <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></button></td> 
+       <td><button  routerLink="/addproduct/{{product.product_id}}" type="button" class="btn btn-info"> <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>Edit</button></td>
+       <td><button (click)="deleteSupplierProduct(product.product_id)" type="button" class="btn btn-danger"> <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>Remove</button></td> 
       </tr>
 
       
