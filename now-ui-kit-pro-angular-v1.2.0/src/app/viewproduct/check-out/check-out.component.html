@@ -1,5 +1,13 @@
 <br> <br> <br> <br> <br> <br>
-<p>check-out works!</p>
-<div id="paypal-button-container"></div>
-<script src="https://www.paypal.com/sdk/js?client-id=ASGsqPypnEfB4-bBt0AtzngmW8YhGgtr8bU34xQWGakzegDbvARW00eJXhRRhEeyyzYm-q8Vj96jtKBB&currency=USD"></script>
-<ngx-paypal [config]="payPalConfig"></ngx-paypal>
+<div class="row justify-content-center">
+    <div class="col-6">
+        <div id="paypal-button-container">
+            <h3 style="text-align: center;">{{product_details.prod_name}}</h3> 
+            <img style="width : 100%; height:200px; object-fit: contain;"  src="{{product_details.cover}}" alt="">
+            <br> <br>
+        </div>
+        <script
+            src="https://www.paypal.com/sdk/js?client-id=ASGsqPypnEfB4-bBt0AtzngmW8YhGgtr8bU34xQWGakzegDbvARW00eJXhRRhEeyyzYm-q8Vj96jtKBB&currency=USD"></script>
+        <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+    </div>
+</div>

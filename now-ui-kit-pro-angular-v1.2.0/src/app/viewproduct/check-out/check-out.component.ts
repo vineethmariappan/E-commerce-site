@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from 'app/api.service';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 @Component({
   selector: 'app-check-out',
@@ -7,10 +9,26 @@ import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 })
 export class CheckOutComponent implements OnInit {
   public payPalConfig?: IPayPalConfig;
-  constructor() { }
+  id : number;
+  product_details;
+  num;
+  orderData = {product_id : Number, email : String, quantity : Number};
+  constructor(private api : ApiService, private route: ActivatedRoute) { 
+    this.route.params.subscribe(params =>{
+      this.id=params['id'];
+    });
+  }
 
   ngOnInit(): void {
-    this.initConfig();
+    this.api.getSupplierProduct(this.id).subscribe(data =>{
+      this.num=new Number();
+      this.product_details=data;
+      console.log(this.product_details);
+      // this.orderData.quantity;
+      this.initConfig();
+   
+  });
+    
   }
   private initConfig(): void {
     this.payPalConfig = {
@@ -22,22 +40,22 @@ export class CheckOutComponent implements OnInit {
         {
           amount: {
             currency_code: 'INR',
-            value: '9.99',
+            value: this.product_details.price,
             breakdown: {
               item_total: {
                 currency_code: 'INR',
-                value: '9.99'
+                value: this.product_details.price
               }
             }
           },
           items: [
             {
-              name: 'REDMI',
+              name: this.product_details.prod_name,
               quantity: '1',
-              category: 'DIGITAL_GOODS',
+              category: "DIGITAL_GOODS",
               unit_amount: {
                 currency_code: 'INR',
-                value: '9.99',
+                value: this.product_details.price,
               },
             }
           ]
@@ -58,11 +76,20 @@ export class CheckOutComponent implements OnInit {
       console.log('onApprove - transaction was approved, but not authorized', data, actions);
       actions.order.get().then(details => {
         console.log('onApprove - you can get full order details inside onApprove: ', details);
+        
       });
     },
     onClientAuthorization: (data) => {
       console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
       // this.showSuccess = true;
+      this.orderData.product_id=this.product_details.product_id;
+        var email_obj=JSON.parse(localStorage.getItem('email'))
+        var email=email_obj.email;
+        this.orderData.email=email;
+        this.api.placeOrder(this.orderData).subscribe(data =>{
+          console.log(data);
+        });
+        alert("ORDER PLACED SUCCESSFULLY");
     },
     onCancel: (data, actions) => {
       console.log('OnCancel', data, actions);

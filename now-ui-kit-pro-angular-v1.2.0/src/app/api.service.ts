@@ -110,5 +110,10 @@ export class ApiService {
   getCategories(){
     return this.http.get(this.baseurl + /category/,{headers : this.httpHeaders});
   }
-
+  placeOrder(orderData): Observable<any>{
+    return this.http.post(this.baseurl + /order_list/,orderData);
+  }
+  getOrders(email): Observable<any>{
+    return this.http.get(this.baseurl + /orders_placed/ + email);
+  }
 }

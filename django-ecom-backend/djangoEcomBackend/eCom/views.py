@@ -117,7 +117,14 @@ class Supplier_ViewSet(viewsets.ModelViewSet):
 class Order_list_ViewSet(viewsets.ModelViewSet):
     queryset=Order_list.objects.all()
     serializer_class=Order_list_Serializer
-
+    def create(self, request):
+            User=get_user_model()
+            print(request.data['product_id'])
+            print(request.data['email'])
+            cust_id = User.objects.get(email=request.data['email'])
+            product_id=Product_detail.objects.get(pk=request.data['product_id'])
+            Order_list.objects.create(product_id=product_id,cust_id=cust_id,quantity="1")
+            return HttpResponse({'message' : 'Order Placed'},status=200)
 
 class Category_ViewSet(viewsets.ModelViewSet):
     queryset=Category.objects.all()
@@ -153,7 +160,16 @@ def supplier_products(request,email): #returns products of the supplier
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
         serializer=Product_detail_Serializer(products, many=True)
         return Response(serializer.data)
-
-
+@api_view(['GET','POST'])
+def orders_placed(request,email): # returns the orders placed for the supplier
+    User=get_user_model()
+    try:
+            supplier=User.objects.get(email=email);
+            order_list=Order_list.objects.all();
+            order_list=order_list.filter(product_id__sup_id=supplier)
+    except:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+    serializer=Order_list_Serializer(order_list, many=True)
+    return Response(serializer.data)
 
 

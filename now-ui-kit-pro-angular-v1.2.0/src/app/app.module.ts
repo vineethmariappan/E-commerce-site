@@ -18,6 +18,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SupplierProductsComponent } from './dashboard/supplier-products/supplier-products.component';
 import { CheckOutComponent } from './viewproduct/check-out/check-out.component';
+import { OrdersPlacedComponent } from './dashboard/orders-placed/orders-placed.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import { CheckOutComponent } from './viewproduct/check-out/check-out.component';
         UserLoginComponent,
         DashboardComponent,
         SupplierProductsComponent,
-        CheckOutComponent
+        CheckOutComponent,
+        OrdersPlacedComponent
         
     ],
     imports: [

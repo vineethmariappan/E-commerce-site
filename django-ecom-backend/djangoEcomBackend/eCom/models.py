@@ -93,7 +93,7 @@ class Order_list(models.Model):
     # cust_id=models.ForeignKey('Customer_detail',on_delete=models.CASCADE)
     cust_id=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, on_delete=models.CASCADE,blank=True)
     quantity=models.IntegerField()
-    def __str__(self): return self.product_id + self.cust_id
+    def __str__(self): return self.product_id.prod_name
 
 class Payment(models.Model):
     total_pricing=models.IntegerField()

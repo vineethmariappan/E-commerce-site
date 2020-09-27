@@ -22,7 +22,8 @@ urlpatterns = [
     path('<int:pk>/', include(router.urls)), #for product update
     path(r'auth/',ObtainAuthToken.as_view()),
     path('find_user/<str:email>/',views.find_user),
-    path('supplier_products/<str:email>/',views.supplier_products)
+    path('supplier_products/<str:email>/',views.supplier_products),
+    path('orders_placed/<str:email>/',views.orders_placed)
 ]
 
 urlpatterns+= static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

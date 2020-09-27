@@ -42,6 +42,8 @@ class Product_detail_Serializer(serializers.ModelSerializer):
 
 #   
 class Order_list_Serializer(serializers.ModelSerializer):
+    product_id=Product_detail_Serializer()
+    cust_id=Users_Serializer()
     class Meta:
         model=Order_list
         fields=['product_id','cust_id','quantity']

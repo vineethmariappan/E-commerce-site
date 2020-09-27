@@ -14,7 +14,7 @@ export class ViewproductComponent implements OnInit {
     this.route.params.subscribe(params =>{
       this.id=params['id'];
       this.getDetails();
-    })
+    });
   }
 
   ngOnInit(): void {
