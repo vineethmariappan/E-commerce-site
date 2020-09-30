@@ -89,8 +89,13 @@ class Supplier(models.Model):
     # def __str__(self): return self.sup_name
 
 class Order_list(models.Model):
+    order_id=models.AutoField(primary_key=True)
     product_id=models.ForeignKey('Product_detail', on_delete=models.CASCADE)
-    # cust_id=models.ForeignKey('Customer_detail',on_delete=models.CASCADE)
+    confirmed=models.BooleanField(null=True,blank=True)
+    delivered=models.BooleanField(null=True,blank=True)
+    cancel_order=models.BooleanField(null=True,blank=True)
+    return_order=models.BooleanField(null=True,blank=True)
+    order_returned=models.BooleanField(null=True,blank=True)
     cust_id=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, on_delete=models.CASCADE,blank=True)
     quantity=models.IntegerField()
     def __str__(self): return self.product_id.prod_name

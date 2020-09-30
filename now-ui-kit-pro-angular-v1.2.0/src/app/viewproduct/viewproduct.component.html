@@ -4,14 +4,15 @@
     <div class="row justify-content-center">
         <div class="col-4 justify-content-center" style="text-align: center;">
             <img width="150px"src="{{product_details.cover}}"> <br> <br>
-            <button  type="" class="btn btn-warning btn-md btn-round"><i class="fa fa-shopping-cart"></i>ADD TO CART</button> 
-            <button routerLink="/viewproduct/checkout/{{id}}"  type="" class="btn btn-success btn-md btn-round"><i class="fa fa-credit-card-alt"></i>BUY NOW</button>
+            <button  type="" class="btn btn-warning btn-md btn-round"><i class="fa fa-shopping-cart"></i> ADD TO CART</button> 
+            <button routerLink="/viewproduct/checkout/{{id}}"  type="" class="btn btn-success btn-md btn-round"><i class="fa fa-credit-card-alt"></i> BUY NOW</button>
         </div>
         <div class="col-8">
                 <!-- <p style="font-size:15px;color: grey;">home > {{product_details.category.category_name}}</p> -->
                 <h2 style="font-size: 20px;">{{product_details.prod_name}}</h2>
                <h6 style="color: grey;"><b class="star" style="font-size: 10px;">{{product_details.rating}} <i  class="fa fa-star" aria-hidden="true"></i></b> 55,782 Ratings & 3,784 Reviews</h6> 
-                <h4 >Description</h4> 
+               <br> <p style="font-size:25px;font-weight: 600;">₹{{product_details.price}}&nbsp;&nbsp;<s style="font-size: 15px;color: grey;font-weight: 500;">₹{{product_details.price/20+product_details.price}}&nbsp;</s><span style="color: green; font-weight: 600; font-size: 15px;">&nbsp;&nbsp;20% off</span></p>
+               <h4 >Description</h4> 
                 <p style="padding : 10px;background-color: rgb(245, 245, 245);">{{product_details.product_description}}</p>
                 <br> <br>
 

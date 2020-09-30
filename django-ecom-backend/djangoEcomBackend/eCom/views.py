@@ -32,7 +32,6 @@ class UserViewSet(viewsets.ModelViewSet):
             new_sup=Supplier.objects.get(sup_address=request.data['sup_address'])
             User.objects.create(is_supplier=True,email=request.data['sup_email'],password=make_password(request.data['sup_password']),username=request.data['sup_name'],sup_id=new_sup)
          return HttpResponse(status=200)
-
 # class Customer_detail_ViewSet(viewsets.ModelViewSet):
 #     queryset=Customer_detail.objects.all()
 #     serializer_class=Customer_detail_Serializer
@@ -171,5 +170,29 @@ def orders_placed(request,email): # returns the orders placed for the supplier
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
     serializer=Order_list_Serializer(order_list, many=True)
     return Response(serializer.data)
-
-
+@api_view(['PUT','GET'])
+def confirm_order(request,order_id):
+    try:
+            order_list=Order_list.objects.get(order_id=order_id)
+            data={"confirmed" : True}
+            serializer=Order_list_Serializer(order_list,data=data,partial=True)
+            if serializer.is_valid():
+                serializer.save()
+            else:
+                print('invalid')
+    except:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+    return HttpResponse({'message' : 'Confirmed Order'},status=200)
+@api_view(['PUT','GET'])
+def order_delivered(request,order_id):
+    try:
+            order_list=Order_list.objects.get(order_id=order_id)
+            data={"delivered" : True}
+            serializer=Order_list_Serializer(order_list,data=data,partial=True)
+            if serializer.is_valid():
+                serializer.save()
+            else:
+                print('invalid')
+    except:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+    return HttpResponse({'message' : 'Delivery Updated'},status=200)  

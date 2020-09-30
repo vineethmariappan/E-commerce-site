@@ -46,7 +46,7 @@ class Order_list_Serializer(serializers.ModelSerializer):
     cust_id=Users_Serializer()
     class Meta:
         model=Order_list
-        fields=['product_id','cust_id','quantity']
+        fields=['order_id','product_id','cust_id','quantity','confirmed','delivered','cancel_order','return_order','order_returned']
 
 class Payment_Serializer(serializers.ModelSerializer):
     class Meta:

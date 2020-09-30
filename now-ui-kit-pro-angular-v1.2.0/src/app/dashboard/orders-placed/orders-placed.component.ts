@@ -21,5 +21,21 @@ export class OrdersPlacedComponent implements OnInit {
       console.log(data);
     });
   }
+  confirmOrder(order_id){
+    this.api.confirmOrder(order_id).subscribe(data=>{
+      console.log(data);
+    }, error=>{
+      console.log(error);
+      this.ngOnInit();
+    });
+  }
+  orderDelivered(order_id){
+    this.api.orderDelivered(order_id).subscribe(data=>{
+      console.log(data);
+    }, error=>{
+      console.log(error);
+      this.ngOnInit();
+    });
+  }
 
 }

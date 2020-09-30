@@ -17,6 +17,8 @@
           <th scope="col">Customer Address</th>
           <th scope="col">Quantity</th>
           <th scope="col">Total Price</th>
+          <th scope="col">confirm order</th>
+          <th scope="col">confirm delivery</th>
         </tr>
       </thead>
       <tbody>
@@ -29,7 +31,11 @@
          <td *ngIf="!order.cust_id.is_customer">   YOUR OWN ORDER</td>
          <!-- <td>address</td> -->
          <td>{{order.quantity}}</td>
-         <td>{{order.product_id.price}}</td>
+         <td>₹{{order.product_id.price}}</td>
+         <td *ngIf="order.confirmed"><button class="btn btn-default" disabled>Confirmed</button></td>
+         <td *ngIf="!order.confirmed"><button class="btn btn-warning" (click)="confirmOrder(order.order_id)"><i class="fa fa-check" aria-hidden="true"></i></button></td>
+         <td *ngIf="order.delivered"><button class="btn btn-default" disabled>Delivered</button></td>
+         <td *ngIf="!order.delivered"><button class="btn btn-warning" (click)="orderDelivered(order.order_id)"><i class="fa fa-check" aria-hidden="true"></i></button></td>
         </tr>
   
         

@@ -23,7 +23,9 @@ urlpatterns = [
     path(r'auth/',ObtainAuthToken.as_view()),
     path('find_user/<str:email>/',views.find_user),
     path('supplier_products/<str:email>/',views.supplier_products),
-    path('orders_placed/<str:email>/',views.orders_placed)
+    path('orders_placed/<str:email>/',views.orders_placed),
+    path('confirm_order/<int:order_id>/',views.confirm_order),
+    path('order_delivered/<int:order_id>/',views.order_delivered)
 ]
 
 urlpatterns+= static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

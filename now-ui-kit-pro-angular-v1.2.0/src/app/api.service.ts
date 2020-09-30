@@ -116,4 +116,10 @@ export class ApiService {
   getOrders(email): Observable<any>{
     return this.http.get(this.baseurl + /orders_placed/ + email);
   }
+  confirmOrder(order_id): Observable<any>{
+      return this.http.put(this.baseurl + /confirm_order/ + order_id +'/',{headers : this.httpHeaders});
+  }
+  orderDelivered(order_id): Observable<any>{
+    return this.http.put(this.baseurl + /order_delivered/ + order_id +'/',{headers : this.httpHeaders});
+  }
 }
