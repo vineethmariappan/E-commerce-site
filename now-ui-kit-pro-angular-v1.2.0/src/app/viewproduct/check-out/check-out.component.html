@@ -1,9 +1,15 @@
 <br> <br> <br> <br> <br> <br>
 <div class="row justify-content-center">
-    <div class="col-6">
+    <div class="col-4">
         <div id="paypal-button-container">
-            <h3 style="text-align: center;">{{product_details.prod_name}}</h3> 
-            <img style="width : 100%; height:200px; object-fit: contain;"  src="{{product_details.cover}}" alt="">
+            <h3 style="text-align: center;">{{product_details.prod_name}}</h3>
+                
+                <div class="form-group col-md-3">
+                    <label for="quantity">Quantity</label>
+                    <input type="text" class="form-control" name="quantity" id="quantity">
+                </div>
+            <br>
+            <img style="width : 100%; height:200px; object-fit: contain;" src="{{product_details.cover}}" alt="">
             <br> <br>
         </div>
         <script

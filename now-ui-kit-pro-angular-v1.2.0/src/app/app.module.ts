@@ -19,6 +19,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SupplierProductsComponent } from './dashboard/supplier-products/supplier-products.component';
 import { CheckOutComponent } from './viewproduct/check-out/check-out.component';
 import { OrdersPlacedComponent } from './dashboard/orders-placed/orders-placed.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { OrdersPlacedComponent } from './dashboard/orders-placed/orders-placed.c
         DashboardComponent,
         SupplierProductsComponent,
         CheckOutComponent,
-        OrdersPlacedComponent
+        OrdersPlacedComponent,
+        CartComponent
         
     ],
     imports: [

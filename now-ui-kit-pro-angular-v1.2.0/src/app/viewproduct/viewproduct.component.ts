@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ViewproductComponent implements OnInit {
   product_details;
   id : number;
+  reviews;
   constructor(private api : ApiService, private route: ActivatedRoute) { 
     this.route.params.subscribe(params =>{
       this.id=params['id'];
@@ -22,6 +23,10 @@ export class ViewproductComponent implements OnInit {
   getDetails(){
     this.api.getProduct(this.id).subscribe(data =>{
       console.log(data);
+      this.api.getRating(this.id).subscribe(data =>{
+        console.log(data);
+        this.reviews=data;
+      })
       this.product_details=data;
     });
   }

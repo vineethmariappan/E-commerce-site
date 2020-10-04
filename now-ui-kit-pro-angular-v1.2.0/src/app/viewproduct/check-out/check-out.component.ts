@@ -12,6 +12,8 @@ export class CheckOutComponent implements OnInit {
   id : number;
   product_details;
   num;
+  quantity: number;
+  tot_price : number;
   orderData = {product_id : Number, email : String, quantity : Number};
   constructor(private api : ApiService, private route: ActivatedRoute) { 
     this.route.params.subscribe(params =>{
@@ -20,6 +22,7 @@ export class CheckOutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.quantity=1;
     this.api.getSupplierProduct(this.id).subscribe(data =>{
       this.num=new Number();
       this.product_details=data;

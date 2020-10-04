@@ -18,28 +18,13 @@
 
                 <!-- RATING AND REVIEW SECTION STARTS HERE -->
                     <h4>Ratings & Reviews</h4>
-                <div class="ratings" style="border:0.1px solid rgb(192, 192, 192); padding: 10px; border-radius: 7px 7px 1px 1px;">
-                 <b><b class="star" style="font-size: 10px;">5 <i  class="fa fa-star" aria-hidden="true"></i></b>  Great product</b> <!-- review heading -->
+                <div *ngFor='let review of reviews' class="ratings" style="border:0.1px solid rgb(192, 192, 192); padding: 10px; border-radius: 7px 7px 1px 1px;">
+                 <b><b class="star" style="font-size: 10px;">{{review.rating}}<i  class="fa fa-star" aria-hidden="true"></i></b>  {{review.review_title}}</b> <!-- review heading -->
                     <br>
-                 <p>Everything in this phone is awesome
-                    Battery is superb
-                    Screen is wide and long
-                    Camera qualities in this price range is awesome. You will able to capture photos in low light because you will get low light sensor
-                    Screen display is good
-                    You will be get DTS sound quality which will give you theatre like experience. You can customise DTS sound</p>
-                <b style="font-size: 15px;color: gray;">Vineeth Mariappan, <span style="font-size:13px"><p> Certified Buyer <i class="fa fa-check" aria-hidden="true"></i></p></span></b>
+                 <p>{{review.review_des}}</p>
+                <b style="font-size: 15px;color: gray;">{{review.customer_id.username}}, <span style="font-size:13px"><p> Certified Buyer <i class="fa fa-check" aria-hidden="true"></i></p></span></b>
                 </div>
-                <div class="ratings" style="border:0.1px solid rgb(192, 192, 192); padding: 10px;">
-                    <b><b class="star" style="font-size: 10px;">5 <i  class="fa fa-star" aria-hidden="true"></i></b>  Brilliant</b> <!-- review heading -->
-                       <br>
-                    <p>Everything in this phone is awesome
-                       Battery is superb
-                       Screen is wide and long
-                       Camera qualities in this price range is awesome. You will able to capture photos in low light because you will get low light sensor
-                       Screen display is good
-                       You will be get DTS sound quality which will give you theatre like experience. You can customise DTS sound</p>
-                   <b style="font-size: 15px;color: gray;">Vineeth Mariappan, <span style="font-size:13px"><p> Certified Buyer <i class="fa fa-check" aria-hidden="true"></i></p></span></b>
-                   </div>
+               
                 <!-- RATING AND REVIEW SECTION ENDS HERE -->
 
          </div>

@@ -5,8 +5,8 @@ from rest_framework import permissions
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .models import Customer_detail,Product_detail,Supplier,Order_list,Payment,Wish_List,Category
-from .serializers import Customer_detail_Serializer, Supplier_Serializer, Payment_Serializer, Product_detail_Serializer, Order_list_Serializer, Wish_List_Serializer, Category_Serializer, Users_Serializer
+from .models import Customer_detail,Product_detail,Supplier,Order_list,Payment,Wish_List,Category,Product_reviews
+from .serializers import Customer_detail_Serializer, Supplier_Serializer, Payment_Serializer, Product_detail_Serializer, Order_list_Serializer, Wish_List_Serializer, Category_Serializer, Users_Serializer, Product_reviews_Serializer
 from rest_framework.filters import SearchFilter,OrderingFilter
 from django.http import HttpResponse
 from rest_framework import generics, permissions
@@ -137,6 +137,10 @@ class Wish_List_ViewSet(viewsets.ModelViewSet):
     queryset=Wish_List.objects.all()
     serializer_class=Wish_List_Serializer
 
+class Product_Review_Viewset(viewsets.ModelViewSet):
+    queryset=Product_reviews.objects.all()
+    serializer_class=Product_reviews_Serializer
+
 @api_view(['GET','POST'])
 def find_user(request,email): #returns the id of the given email
         User=get_user_model()
@@ -196,3 +200,38 @@ def order_delivered(request,order_id):
     except:
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
     return HttpResponse({'message' : 'Delivery Updated'},status=200)  
+@api_view(['GET','POST'])
+def orders_customer_placed(request,email): # returns the orders placed by the customer
+    User=get_user_model()
+    try:
+            customer=User.objects.get(email=email);
+            order_list=Order_list.objects.all();
+            order_list=order_list.filter(cust_id=customer)
+    except:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+    serializer=Order_list_Serializer(order_list, many=True)
+    return Response(serializer.data)
+@api_view(['PUT','GET'])
+def cancel_order(request,order_id):
+    try:
+        order_list=Order_list.objects.get(order_id=order_id)
+        data={"cancel_order" : True}
+        serializer=Order_list_Serializer(order_list,data=data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+        else:
+            print('invalid')
+    except:
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+    return HttpResponse({'message' : 'Cancelled Order'},status=200)
+@api_view(['GET'])
+def get_reviews(request,product_id):
+    try:
+        product=Product_detail.objects.get(product_id=product_id)
+        product_reviews=Product_reviews.objects.all()
+        product_reviews=product_reviews.filter(product_id=product)
+        serializer=Product_reviews_Serializer(product_reviews,many=True)
+        return Response(serializer.data)
+    except:
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+    return HttpResponse({'message' : 'reviews sent'},status=200)

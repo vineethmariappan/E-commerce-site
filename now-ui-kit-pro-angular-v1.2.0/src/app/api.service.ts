@@ -26,6 +26,7 @@ export class ApiService {
   }
   checkToken() : boolean{
     var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if(!currentUser)  return false;
     this.token = currentUser.token; //gets user token when user opens the app
     console.log(this.token);
     if(this.token=="")
@@ -121,5 +122,14 @@ export class ApiService {
   }
   orderDelivered(order_id): Observable<any>{
     return this.http.put(this.baseurl + /order_delivered/ + order_id +'/',{headers : this.httpHeaders});
+  }
+  getCustomersOrders(email): Observable<any>{
+    return this.http.get(this.baseurl + /orders_customer_placed/ + email);
+  }
+  cancelOrder(orderid){
+    return this.http.put(this.baseurl + /cancel_order/ + orderid +'/',{headers : this.httpHeaders});
+  }
+  getRating(id): Observable<any>{
+    return this.http.get(this.baseurl + /get_reviews/ + id);
   }
 }

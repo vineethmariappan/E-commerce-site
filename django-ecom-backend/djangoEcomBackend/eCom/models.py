@@ -83,6 +83,14 @@ class Product_detail(models.Model):
     cover=models.ImageField(blank=True,null=True,upload_to=upload_path)
     def __str__(self): return self.prod_name
 
+class Product_reviews(models.Model):
+    reviews_id=models.AutoField(primary_key=True)
+    product_id=models.ForeignKey('Product_detail',blank=True,null=True,on_delete=models.CASCADE)
+    customer_id=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, on_delete=models.CASCADE,blank=True)
+    rating=models.IntegerField()
+    review_title=models.TextField(blank=True,null=True)
+    review_des=models.TextField(blank=True,null=True)
+
 class Supplier(models.Model):
     sup_id=models.AutoField(primary_key=True)
     sup_address=models.CharField(max_length=256,default="no value")

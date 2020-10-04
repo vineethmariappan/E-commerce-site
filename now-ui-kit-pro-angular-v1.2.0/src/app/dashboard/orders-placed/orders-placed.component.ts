@@ -37,5 +37,5 @@ export class OrdersPlacedComponent implements OnInit {
       this.ngOnInit();
     });
   }
-
+  
 }

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import Customer_detail,Product_detail,Supplier,Order_list,Payment,Wish_List,Category
+from .models import Customer_detail,Product_detail,Supplier,Order_list,Payment,Wish_List,Category, Product_reviews
 from django.contrib.auth import get_user_model
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -56,3 +56,9 @@ class Payment_Serializer(serializers.ModelSerializer):
 class Wish_List_Serializer(serializers.ModelSerializer):
     class Meta:
         fields=['product_id','cust_id']
+
+class Product_reviews_Serializer(serializers.ModelSerializer):
+    customer_id=Users_Serializer()
+    class Meta:
+        model=Product_reviews
+        fields='__all__' ;

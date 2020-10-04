@@ -10,7 +10,7 @@ import { ViewproductComponent } from './viewproduct/viewproduct.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SupplierProductsComponent } from './dashboard/supplier-products/supplier-products.component';
-import { AppComponent } from './app.component';
+import { CartComponent } from './cart/cart.component';
 import { CheckOutComponent } from './viewproduct/check-out/check-out.component';
 import { OrdersPlacedComponent } from './dashboard/orders-placed/orders-placed.component';
 const routes: Routes =[
@@ -24,7 +24,8 @@ const routes: Routes =[
     {path : 'dashboard' , component : DashboardComponent},
     {path : 'dashboard/supplier-products' , component : SupplierProductsComponent},
     {path : 'dashboard/orders-placed' , component : OrdersPlacedComponent},
-    {path : 'viewproduct/checkout/:id' , component : CheckOutComponent}
+    {path : 'viewproduct/checkout/:id' , component : CheckOutComponent},
+    {path : 'cart' , component : CartComponent}
 ];
 
 @NgModule({

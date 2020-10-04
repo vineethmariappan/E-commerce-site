@@ -13,6 +13,7 @@ router.register(r'payment',views.Payment_ViewSet)
 router.register(r'wish_list',views.Wish_List_ViewSet)
 router.register(r'category',views.Category_ViewSet)
 router.register(r'users',views.UserViewSet)
+router.register(r'product_reviews',views.Product_Review_Viewset)
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -25,7 +26,10 @@ urlpatterns = [
     path('supplier_products/<str:email>/',views.supplier_products),
     path('orders_placed/<str:email>/',views.orders_placed),
     path('confirm_order/<int:order_id>/',views.confirm_order),
-    path('order_delivered/<int:order_id>/',views.order_delivered)
+    path('order_delivered/<int:order_id>/',views.order_delivered),
+    path('orders_customer_placed/<str:email>/',views.orders_customer_placed),
+    path('cancel_order/<int:order_id>/',views.cancel_order),
+    path('get_reviews/<int:product_id>',views.get_reviews)
 ]
 
 urlpatterns+= static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
