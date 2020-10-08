@@ -20,6 +20,7 @@ import { SupplierProductsComponent } from './dashboard/supplier-products/supplie
 import { CheckOutComponent } from './viewproduct/check-out/check-out.component';
 import { OrdersPlacedComponent } from './dashboard/orders-placed/orders-placed.component';
 import { CartComponent } from './cart/cart.component';
+import { RateProductComponent } from './viewproduct/rate-product/rate-product.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { CartComponent } from './cart/cart.component';
         SupplierProductsComponent,
         CheckOutComponent,
         OrdersPlacedComponent,
-        CartComponent
+        CartComponent,
+        RateProductComponent
         
     ],
     imports: [

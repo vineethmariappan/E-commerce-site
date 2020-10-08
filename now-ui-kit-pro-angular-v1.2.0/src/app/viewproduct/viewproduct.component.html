@@ -17,7 +17,11 @@
                 <br> <br>
 
                 <!-- RATING AND REVIEW SECTION STARTS HERE -->
-                    <h4>Ratings & Reviews</h4>
+                <div class="row">
+                   <div class="col-6"><h4>Ratings & Reviews</h4><br></div> 
+                 <div class="col-6"><button class="btn btn-info btn-md pull-right" routerLink="/viewproduct/rate-product/{{id}}"><i  class="fa fa-star" aria-hidden="true"></i>  RATE HERE</button></div>
+
+                </div>
                 <div *ngFor='let review of reviews' class="ratings" style="border:0.1px solid rgb(192, 192, 192); padding: 10px; border-radius: 7px 7px 1px 1px;">
                  <b><b class="star" style="font-size: 10px;">{{review.rating}}<i  class="fa fa-star" aria-hidden="true"></i></b>  {{review.review_title}}</b> <!-- review heading -->
                     <br>

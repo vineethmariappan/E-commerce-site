@@ -36,6 +36,11 @@ export class ApiService {
       return true;
     }
   }
+  getUserEmail() : string{
+    var data = JSON.parse(localStorage.getItem('email'));
+    var email=data.email;
+    return email;
+  }
   checkSupplier() : boolean{
      var data = JSON.parse(localStorage.getItem('isSupplier'));
      var isSupplier=data.isSupplier;
@@ -131,5 +136,15 @@ export class ApiService {
   }
   getRating(id): Observable<any>{
     return this.http.get(this.baseurl + /get_reviews/ + id);
+  }
+  rate(product_review): Observable<any>{
+    return this.http.post(this.baseurl + /product_reviews/,product_review);
+  }
+  check_if_rated(email) : Observable<any>{
+    console.log("check if rated");
+    return this.http.get(this.baseurl + /get_user_review/+email);
+  }
+  update_rating(product_review,reviews_id) : Observable<any>{
+    return this.http.put(this.baseurl +/product_reviews/+reviews_id+'/',product_review,{headers : this.httpHeaders});
   }
 }

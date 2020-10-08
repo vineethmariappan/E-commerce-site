@@ -29,7 +29,8 @@ urlpatterns = [
     path('order_delivered/<int:order_id>/',views.order_delivered),
     path('orders_customer_placed/<str:email>/',views.orders_customer_placed),
     path('cancel_order/<int:order_id>/',views.cancel_order),
-    path('get_reviews/<int:product_id>',views.get_reviews)
+    path('get_reviews/<int:product_id>',views.get_reviews),
+    path('get_user_review/<str:email>',views.get_user_review)
 ]
 
 urlpatterns+= static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

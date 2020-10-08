@@ -94,7 +94,7 @@ class Product_detail_ViewSet(viewsets.ModelViewSet):
         User=get_user_model()
         sup_obj = User.objects.get(sup_id=supplier_id)
         catag_obj = Category.objects.get(category_name = category)
-        if hasImage:
+        if hasImage: # we update the img by creating a temp obj, we add the new img to the temp obj and then add the src of temp obj's img_cover to the old obj's src, finally we delete the temp obj
             Product_detail.objects.create(prod_name=prod_name+"_img_update",cover=cover,availability=availability,price=price,rating=1,category=catag_obj,sup_id=sup_obj,product_description=product_description)
             product_temp=Product_detail.objects.get(prod_name=prod_name+"_img_update",sup_id=sup_obj)
             Product_detail.objects.filter(pk=pk).update(prod_name=prod_name,cover=product_temp.cover,availability=availability,price=price,category=catag_obj,sup_id=sup_obj,product_description=product_description)
@@ -140,6 +140,20 @@ class Wish_List_ViewSet(viewsets.ModelViewSet):
 class Product_Review_Viewset(viewsets.ModelViewSet):
     queryset=Product_reviews.objects.all()
     serializer_class=Product_reviews_Serializer
+    def create(self, request):
+            User=get_user_model()
+            cust_id = User.objects.get(email=request.data['email'])
+            product_id= Product_detail.objects.get(product_id=request.data['id'])
+            Product_reviews.objects.create(product_id=product_id,customer_id=cust_id,rating=request.data['rating'],review_title=request.data['review_title'],review_des=request.data['review_desc'])
+            return HttpResponse({'message' : 'review saved'},status=200)
+
+    def update(self, request, pk=None):
+            print('update')
+            User=get_user_model()
+            cust_id = User.objects.get(email=request.data['email'])
+            product_id= Product_detail.objects.get(product_id=request.data['id'])
+            Product_reviews.objects.filter(customer_id__email=cust_id).update(product_id=product_id,customer_id=cust_id,rating=request.data['rating'],review_title=request.data['review_title'],review_des=request.data['review_desc'])
+            return HttpResponse({'message' : 'review updated'},status=200)
 
 @api_view(['GET','POST'])
 def find_user(request,email): #returns the id of the given email
@@ -167,8 +181,8 @@ def supplier_products(request,email): #returns products of the supplier
 def orders_placed(request,email): # returns the orders placed for the supplier
     User=get_user_model()
     try:
-            supplier=User.objects.get(email=email);
-            order_list=Order_list.objects.all();
+            supplier=User.objects.get(email=email)
+            order_list=Order_list.objects.all()
             order_list=order_list.filter(product_id__sup_id=supplier)
     except:
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
@@ -235,3 +249,16 @@ def get_reviews(request,product_id):
     except:
         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
     return HttpResponse({'message' : 'reviews sent'},status=200)
+@api_view(['GET'])
+def get_user_review(request,email):
+    User=get_user_model()
+    try:
+        cust=User.objects.get(email=email)
+        product_review=Product_reviews.objects.all()
+        product_review=product_review.filter(customer_id=cust)
+        print(product_review)
+        serializer=Product_reviews_Serializer(product_review,many=True)
+        return Response(serializer.data)
+    except:
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+    # return HttpResponse({'message' : 'reviews '},status=200)
