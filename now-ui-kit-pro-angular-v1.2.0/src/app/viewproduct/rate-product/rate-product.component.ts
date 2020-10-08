@@ -1,8 +1,7 @@
-import { ThrowStmt } from '@angular/compiler';
+// import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'app/api.service';
-import { defaultMaxListeners } from 'stream';
 
 @Component({
   selector: 'app-rate-product',
