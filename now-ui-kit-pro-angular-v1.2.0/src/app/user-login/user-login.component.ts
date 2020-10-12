@@ -22,23 +22,21 @@ export class UserLoginComponent implements OnInit {
     this.api.loginUser(this.login).subscribe(data=>{
       console.log(data.token);
       this.api.httpHeaders = new HttpHeaders({'Content-Type' : 'application/json', 'Authorization' : 'token '+ data.token});
-      localStorage.setItem('currentUser', JSON.stringify({ token: data.token}));
-      localStorage.setItem('email', JSON.stringify({ email : this.login.username}));
-      
+      localStorage.setItem('currentUser', JSON.stringify({token: data.token}));
+      localStorage.setItem('email', JSON.stringify({email : this.login.username}));
       this.api.loginEmitter.next(true);
       this.api.getUserDetails(this.login.username).subscribe(responseData  =>{
-          // console.log(responseData);
           if(responseData.is_supplier==true){
               this.api.isSupplierEmitter.next(true);
               localStorage.setItem('isSupplier', JSON.stringify({ isSupplier :  true}));
           }
-          else
+          else{
+            this.api.isSupplierEmitter.next(false);
             localStorage.setItem('isSupplier', JSON.stringify({ isSupplier :  false}));
+          }
       });
       
       this.api.token=data.token;
-      localStorage.setItem('currentUser', JSON.stringify({ token: data.token }));
-      
       alert("Logged in ! ")
      
     },error=>{

@@ -29,19 +29,13 @@ export class NavBarComponent implements OnInit {
   }
   ngOnInit(): void {
     
-    if(this.api.checkToken()){
-      this.log=true;
+    this.api.checkToken();
+    this.api.loginEmitter.subscribe(login =>{ // changes nav bar when user logs in or out
+      this.log=login;
       if(this.api.checkSupplier())
         this.isSupplier=true;
       else
         this.isSupplier=false;
-    }
-    else{
-      this.log=false;
-      this.isSupplier=false;
-    }
-    this.api.loginEmitter.subscribe(login =>{ // changes nav bar when user logs in or out
-      this.log=login;
     }
     );
 

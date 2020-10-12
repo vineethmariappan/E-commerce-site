@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { identifierModuleUrl } from '@angular/compiler';
+import 'rxjs/add/operator/toPromise';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,6 +11,7 @@ export class ApiService {
   isSupplierEmitter = new Subject<boolean>();
   baseurl="http://127.0.0.1:8000";
   token='';
+username='';
   httpHeaders = new HttpHeaders({'Content-Type' : 'application/json', 'Authorization' : 'token '+ this.token});
   constructor(private http : HttpClient) { 
     
@@ -26,15 +27,32 @@ export class ApiService {
   }
   checkToken() : boolean{
     var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if(!currentUser)  return false;
+    var username = JSON.parse(localStorage.getItem('email'));
+    // var password = JSON.parse(localStorage.getItem('password'));
+    if(!currentUser)  
+      return false;
     this.token = currentUser.token; //gets user token when user opens the app
-    console.log(this.token);
+    console.log(currentUser);
+    if(username)
+    this.username=username.email;
+    // console.log(this.login);
     if(this.token=="")
       return false;
     else{
-      // got to check if a valid token is present
-      return true;
+      //check if the token is valid
+      this.isTokenValid().subscribe(data=>{
+        this.loginEmitter.next(true);
+        console.log(data);
+        return true;
+      }, error=>{
+        this.loginEmitter.next(false);
+        console.log(error);
+        return false;
+      })
     }
+  }
+  isTokenValid(){
+    return this.http.get(this.baseurl + "/check_token/"+this.token+','+this.username,{ headers : this.httpHeaders});
   }
   getUserEmail() : string{
     var data = JSON.parse(localStorage.getItem('email'));
@@ -43,6 +61,7 @@ export class ApiService {
   }
   checkSupplier() : boolean{
      var data = JSON.parse(localStorage.getItem('isSupplier'));
+     if(!data) return false;
      var isSupplier=data.isSupplier;
      if(isSupplier)
       return true;
@@ -52,7 +71,9 @@ export class ApiService {
     this.loginEmitter.next(false);
     this.isSupplierEmitter.next(false);
     this.token="";
+    localStorage.setItem('email',JSON.stringify({email : ""}));
     localStorage.setItem('currentUser', JSON.stringify({ token: ""}));
+    localStorage.removeItem('isSupplier');
     this.httpHeaders = new HttpHeaders({'Content-Type' : 'application/json', 'Authorization' : 'token '+ this.token});
   }
   getAllProducts(search_product : string): Observable<any> {
@@ -145,6 +166,6 @@ export class ApiService {
     return this.http.get(this.baseurl + /get_user_review/+email);
   }
   update_rating(product_review,reviews_id) : Observable<any>{
-    return this.http.put(this.baseurl +/product_reviews/+reviews_id+'/',product_review,{headers : this.httpHeaders});
+    return this.http.put(this.baseurl +/product_reviews/+reviews_id+'/?',product_review,{headers : this.httpHeaders});
   }
 }

@@ -15,6 +15,8 @@ from django.contrib.auth.hashers import make_password #by default django stores 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+# from rest_framework_jwt.serializers import VerifyJSONWebTokenSerializer
+from rest_framework.authtoken.models import Token
 class UserViewSet(viewsets.ModelViewSet):
     User=get_user_model() 
     queryset=User.objects.all()
@@ -262,3 +264,19 @@ def get_user_review(request,email):
     except:
         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
     # return HttpResponse({'message' : 'reviews '},status=200)
+@api_view(['GET'])
+def check_token(request,data):
+    User=get_user_model()
+    try:
+        print(data)
+        data_arr = data.split(',')
+        token_data = {'token': data_arr[0]}
+        print(token_data)
+        user_client=User.objects.get(email=data_arr[1])
+        user = Token.objects.get(key=data_arr[0]).user
+        if(user==user_client):
+            return Response({'message' : 'valid'},status=200)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
