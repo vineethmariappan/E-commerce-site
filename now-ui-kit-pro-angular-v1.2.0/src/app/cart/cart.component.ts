@@ -10,7 +10,9 @@ import { ApiService } from 'app/api.service';
 export class CartComponent implements OnInit {
 orders=[]
 url;
-  constructor(private route: ActivatedRoute,private api : ApiService) { }
+no_orders  : boolean;
+  constructor(private route: ActivatedRoute,private api : ApiService) { 
+  }
 
   ngOnInit(): void {
     var email_obj=JSON.parse(localStorage.getItem('email'))
@@ -19,7 +21,12 @@ url;
     this.api.getCustomersOrders(email).subscribe(data=>{
       this.orders=data;
       console.log(data);
+      if(this.orders.length==0)
+        this.no_orders=true;
+      else
+        this.no_orders=false;
     });
+
   }
   cancelOrder(order_id){
     this.api.cancelOrder(order_id).subscribe(data=>{

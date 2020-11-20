@@ -31,7 +31,9 @@ urlpatterns = [
     path('cancel_order/<int:order_id>/',views.cancel_order),
     path('get_reviews/<int:product_id>',views.get_reviews),
     path('get_user_review/<str:email>',views.get_user_review),
-    path('check_token/<str:data>',views.check_token)
+    path('check_token/<str:data>',views.check_token),
+    path('can_user_rate/',views.can_user_rate)
+    
 ]
 
 urlpatterns+= static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

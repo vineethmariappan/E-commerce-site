@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';   
 import 'rxjs/add/operator/toPromise';
 @Injectable({
   providedIn: 'root'
@@ -167,5 +167,8 @@ username='';
   }
   update_rating(product_review,reviews_id) : Observable<any>{
     return this.http.put(this.baseurl +/product_reviews/+reviews_id+'/?',product_review,{headers : this.httpHeaders});
+  }
+  CanUserRate(email_product): Observable<any>{
+    return this.http.post(this.baseurl + /can_user_rate/,email_product,{headers : this.httpHeaders}); //email id of the user and the product is sent
   }
 }

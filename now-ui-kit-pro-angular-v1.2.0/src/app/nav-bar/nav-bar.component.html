@@ -1,20 +1,19 @@
-<nav class="navbar navbar-expand-lg bg-info fixed-top">
+<nav class="navbar navbar-expand-lg bg-info fixed-top" role="navigation">
 <!-- changed navbar-transparent behaviour at sass/now-ui-kit/_navbar.scss -->
     <div class="container">
-
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navi" aria-controls="navi" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar bar1"></span>
+            <span class="navbar-toggler-bar bar2"></span>
+            <span class="navbar-toggler-bar bar3"></span>
+          </button>
         <a class="navbar-brand" href="#pablo">
          <b style="font-size: 20px;">V<span style="color: rgb(255, 251, 0);">Kart</span></b> 
         </a>
         
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-bar bar1"></span>
-
-         </button>
-         
-
-    <div class="collapse navbar-collapse" id="navigation">
+      
+    <div class="collapse navbar-collapse show" id="navi">
         <form (ngSubmit)="start_search()">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active" style="padding-left: 60px;">
                 
                 <div class="form-group"> 
@@ -28,9 +27,8 @@
     </form>
     </div>
  
-    <div class="collapse navbar-collapse" id="navigation">
-        <ul class="navbar-nav ml-auto">
-            <!-- <button type="button" class="btn btn-neutral btn-round btn-sm"><p style="color: black;">Login</p></button> -->
+    <div class="collapse navbar-collapse"  id="navi">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             
             <li class="nav-item">
                 <a class="nav-link" routerLink="/">

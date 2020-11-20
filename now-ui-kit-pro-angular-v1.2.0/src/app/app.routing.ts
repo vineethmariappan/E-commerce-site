@@ -14,6 +14,7 @@ import { CartComponent } from './cart/cart.component';
 import { CheckOutComponent } from './viewproduct/check-out/check-out.component';
 import { OrdersPlacedComponent } from './dashboard/orders-placed/orders-placed.component';
 import { RateProductComponent } from './viewproduct/rate-product/rate-product.component';
+import { HomeComponent } from './home/home.component';
 const routes: Routes =[
     { path: 'search/:search_name', component : SearchResultComponent },
     {path : 'addproduct', component : AddProductComponent},
@@ -27,7 +28,8 @@ const routes: Routes =[
     {path : 'dashboard/orders-placed' , component : OrdersPlacedComponent},
     {path : 'viewproduct/checkout/:id' , component : CheckOutComponent},
     {path : 'cart' , component : CartComponent},
-    {path : 'viewproduct/rate-product/:id' , component : RateProductComponent}
+    {path : 'viewproduct/rate-product/:id' , component : RateProductComponent},
+    {path : '' , component : HomeComponent}
 ];
 
 @NgModule({

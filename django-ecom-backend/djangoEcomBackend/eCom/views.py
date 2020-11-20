@@ -268,7 +268,6 @@ def get_user_review(request,email):
 def check_token(request,data):
     User=get_user_model()
     try:
-        print(data)
         data_arr = data.split(',')
         token_data = {'token': data_arr[0]}
         print(token_data)
@@ -278,5 +277,20 @@ def check_token(request,data):
             return Response({'message' : 'valid'},status=200)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+@api_view(['POST'])
+def can_user_rate(request):
+    User=get_user_model()
+    try:
+        cust=User.objects.get(email=request.data['email'])
+        prod=Product_detail.objects.get(product_id=int(request.data['product_id']))
+        order_list=Order_list.objects.all()
+        order_list=order_list.filter(product_id=prod,cust_id=cust)
+        # print(order_list)
+        if not bool(order_list):
+            # print("FAIL")
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response({'message' : 'can rate'},status=200)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)

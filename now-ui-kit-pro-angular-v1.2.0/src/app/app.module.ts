@@ -21,6 +21,7 @@ import { CheckOutComponent } from './viewproduct/check-out/check-out.component';
 import { OrdersPlacedComponent } from './dashboard/orders-placed/orders-placed.component';
 import { CartComponent } from './cart/cart.component';
 import { RateProductComponent } from './viewproduct/rate-product/rate-product.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { RateProductComponent } from './viewproduct/rate-product/rate-product.co
         CheckOutComponent,
         OrdersPlacedComponent,
         CartComponent,
-        RateProductComponent
+        RateProductComponent,
+        HomeComponent
         
     ],
     imports: [

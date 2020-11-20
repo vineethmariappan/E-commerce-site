@@ -11,7 +11,7 @@ import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 })
 export class AppComponent implements OnInit {
     private _router: Subscription;
-
+    public height : Number;
     constructor( private renderer : Renderer2, private router: Router, @Inject(DOCUMENT,) private document: any, private element : ElementRef, public location: Location) {}
     ngOnInit() {
         var navbar : HTMLElement = this.element.nativeElement.children[0].children[0];
@@ -55,7 +55,12 @@ export class AppComponent implements OnInit {
             body.classList.add('ie-background');
 
         }
-
+        this.router.events.subscribe((val) =>{
+        if(this.router.url=='/')
+            this.height=73;
+        else
+            this.height=150;
+        });
     }
     removeFooter() {
         var titlee = this.location.prepareExternalUrl(this.location.path());

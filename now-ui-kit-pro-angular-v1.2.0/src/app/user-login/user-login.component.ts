@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'app/api.service';
 import { HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-user-login',
   templateUrl: './user-login.component.html',
@@ -14,7 +15,7 @@ export class UserLoginComponent implements OnInit {
 
   }
  
-  constructor(private api : ApiService) { }
+  constructor(private api : ApiService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -38,7 +39,7 @@ export class UserLoginComponent implements OnInit {
       
       this.api.token=data.token;
       alert("Logged in ! ")
-     
+      this.router.navigate(['/']);
     },error=>{
       console.log(error);
     });
