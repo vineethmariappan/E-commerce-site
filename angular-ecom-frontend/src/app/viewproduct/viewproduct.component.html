@@ -10,7 +10,7 @@
         </div>
         <div class="col-8">
                 <h2 style="font-size: 20px;">{{product_details.prod_name}}</h2>
-               <h6 style="color: grey;"><b class="star" style="font-size: 10px;">{{product_details.rating}} <i  class="fa fa-star" aria-hidden="true"></i></b> 55,782 Ratings & 3,784 Reviews</h6> 
+               <h6 style="color: grey;"><b class="star" style="font-size: 12px;" [style.background-color]="star_color">{{product_rating}} <i  class="fa fa-star" aria-hidden="true"></i></b>&nbsp; {{total_reviews}} Reviews</h6> 
                <br> <p style="font-size:25px;font-weight: 600;">₹{{product_details.price}}&nbsp;&nbsp;<s style="font-size: 15px;color: grey;font-weight: 500;">₹{{product_details.price/20+product_details.price}}&nbsp;</s><span style="color: green; font-weight: 600; font-size: 15px;">&nbsp;&nbsp;20% off</span></p>
                <h4 >Description</h4> 
                 <p style="padding : 10px;background-color: rgb(245, 245, 245);">{{product_details.product_description}}</p>
@@ -18,14 +18,14 @@
 
                 <!-- RATING AND REVIEW SECTION STARTS HERE -->
                 <div class="row">
-                   <div class="col-6"><h4>Ratings & Reviews</h4><br></div> 
+                   <div class="col-6"><h4>User Reviews</h4><br></div> 
                  <div class="col-6" *ngIf="can_rate"><button class="btn btn-info btn-md pull-right" routerLink="/viewproduct/rate-product/{{id}}"><i  class="fa fa-star" aria-hidden="true"></i>  RATE HERE</button></div>
 
                 </div>
                     <p *ngIf="no_reviews">No user Reviews</p>
                 <div class="container-fluid" style="box-shadow: 5px 10px 8px #e0e0e098;border: 0.1px solid rgba(185, 185, 185, 0.459);">
                 <div *ngFor='let review of reviews' class="ratings" style="padding: 10px;">
-                 <b><b class="star" style="font-size: 10px;">{{review.rating}}<i  class="fa fa-star" aria-hidden="true"></i></b>  {{review.review_title}}</b> <!-- review heading -->
+                 <b><b class="star" style="font-size: 10px;" [style.background-color]="review.color">{{review.rating}} <i  class="fa fa-star" aria-hidden="true"></i></b>  {{review.review_title}}</b> <!-- review heading -->
                     <br>
                  <p>{{review.review_des}}</p>
                 <b style="font-size: 15px;color: gray;">{{review.customer_id.username}}, <span style="font-size:13px"><p> Certified Buyer <i class="fa fa-check" aria-hidden="true"></i></p></span></b>
@@ -40,6 +40,6 @@
 </div>
 <style>
     .star{
-        color: white;background-color: #388e3c;padding: 2px; border-radius: 3px;padding-left:6px;padding-right:6px; 
+        color: white;padding: 2px; border-radius: 3px;padding-left:6px;padding-right:6px; 
     }
 </style>

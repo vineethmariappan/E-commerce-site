@@ -30,9 +30,10 @@ urlpatterns = [
     path('orders_customer_placed/<str:email>/',views.orders_customer_placed),
     path('cancel_order/<int:order_id>/',views.cancel_order),
     path('get_reviews/<int:product_id>',views.get_reviews),
-    path('get_user_review/<str:email>',views.get_user_review),
+    path('get_user_review/',views.get_user_review),
     path('check_token/<str:data>',views.check_token),
-    path('can_user_rate/',views.can_user_rate)
+    path('can_user_rate/',views.can_user_rate),
+    path('get_product_rating/<int:prod_id>',views.get_product_rating)
     
 ]
 

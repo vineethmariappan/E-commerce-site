@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from 'app/api.service';
+import { ApiService } from 'app/services/api.service';
+import { BaseService } from 'app/services/base.service';
 
 @Component({
   selector: 'app-orders-placed',
@@ -10,12 +11,12 @@ import { ApiService } from 'app/api.service';
 export class OrdersPlacedComponent implements OnInit {
   orders=[];
   url;
-  constructor(private api : ApiService, private route: ActivatedRoute) { }
+  constructor(private api : ApiService, private route: ActivatedRoute, private base : BaseService) { }
 
   ngOnInit(): void {
     var email_obj=JSON.parse(localStorage.getItem('email'))
     var email=email_obj.email;
-    this.url=this.api.baseurl;
+    this.url=this.base.baseurl;
     this.api.getOrders(email).subscribe(data=>{
       this.orders=data;
       console.log(data);

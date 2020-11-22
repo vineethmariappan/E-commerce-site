@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from 'app/api.service';
+import { ApiService } from 'app/services/api.service';
+import { BaseService } from 'app/services/base.service';
 
 @Component({
   selector: 'app-cart',
@@ -11,13 +12,13 @@ export class CartComponent implements OnInit {
 orders=[]
 url;
 no_orders  : boolean;
-  constructor(private route: ActivatedRoute,private api : ApiService) { 
+  constructor(private route: ActivatedRoute,private api : ApiService, private base : BaseService) { 
   }
 
   ngOnInit(): void {
     var email_obj=JSON.parse(localStorage.getItem('email'))
     var email=email_obj.email;
-    this.url=this.api.baseurl;
+    this.url=this.base.baseurl;
     this.api.getCustomersOrders(email).subscribe(data=>{
       this.orders=data;
       console.log(data);

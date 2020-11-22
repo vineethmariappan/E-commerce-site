@@ -1,7 +1,7 @@
 // import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from 'app/api.service';
+import { ApiService } from 'app/services/api.service';
 
 @Component({
   selector: 'app-rate-product',
@@ -71,13 +71,14 @@ rate_product(item){
     this.route.params.subscribe(params =>{
       this.product_review.id=params['id'];
       this.product_review.email=this.api.getUserEmail();
+      this.check_if_rated();
       
     });
   }
   reviews_id;
   check_if_rated(){
     var email=this.api.getUserEmail();
-    this.api.check_if_rated(email).subscribe(data=>{
+    this.api.check_if_rated({'email' : email, 'product_id' : this.product_review.id}).subscribe(data=>{
       if(!data[0]) return;
       this.reviews_id=data[0].reviews_id;
       this.rate_product(data[0].rating);
@@ -89,7 +90,7 @@ rate_product(item){
     })
   }
   ngOnInit(): void {
-    this.check_if_rated();
+    
   }
 rate(){
   if(this.update==true){

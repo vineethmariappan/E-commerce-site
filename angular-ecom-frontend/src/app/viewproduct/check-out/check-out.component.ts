@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from 'app/api.service';
+import { ApiService } from 'app/services/api.service';
+import { SupplierService } from 'app/services/supplier.service';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 @Component({
   selector: 'app-check-out',
@@ -15,7 +16,7 @@ export class CheckOutComponent implements OnInit {
   quantity: number;
   tot_price : number;
   orderData = {product_id : Number, email : String, quantity : Number};
-  constructor(private api : ApiService, private route: ActivatedRoute) { 
+  constructor(private api : ApiService, private route: ActivatedRoute, private SupplierService : SupplierService) { 
     this.route.params.subscribe(params =>{
       this.id=params['id'];
     });
@@ -23,7 +24,7 @@ export class CheckOutComponent implements OnInit {
 
   ngOnInit(): void {
     this.quantity=1;
-    this.api.getSupplierProduct(this.id).subscribe(data =>{
+    this.SupplierService.getSupplierProduct(this.id).subscribe(data =>{
       this.num=new Number();
       this.product_details=data;
       console.log(this.product_details);

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'app/api.service';
+import { ApiService } from 'app/services/api.service';
 import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { TokenAuthService } from 'app/services/token-auth.service';
 @Component({
   selector: 'app-user-login',
   templateUrl: './user-login.component.html',
@@ -15,7 +16,7 @@ export class UserLoginComponent implements OnInit {
 
   }
  
-  constructor(private api : ApiService, private router: Router) { }
+  constructor(private api : ApiService, private router: Router, private tokenAuth : TokenAuthService) { }
 
   ngOnInit(): void {
   }
@@ -25,7 +26,7 @@ export class UserLoginComponent implements OnInit {
       this.api.httpHeaders = new HttpHeaders({'Content-Type' : 'application/json', 'Authorization' : 'token '+ data.token});
       localStorage.setItem('currentUser', JSON.stringify({token: data.token}));
       localStorage.setItem('email', JSON.stringify({email : this.login.username}));
-      this.api.loginEmitter.next(true);
+      this.tokenAuth.loginEmitter.next(true);
       this.api.getUserDetails(this.login.username).subscribe(responseData  =>{
           if(responseData.is_supplier==true){
               this.api.isSupplierEmitter.next(true);
@@ -37,7 +38,7 @@ export class UserLoginComponent implements OnInit {
           }
       });
       
-      this.api.token=data.token;
+      this.tokenAuth.token=data.token;
       alert("Logged in ! ")
       this.router.navigate(['/']);
     },error=>{

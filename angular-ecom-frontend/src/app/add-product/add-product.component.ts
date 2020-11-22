@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'app/api.service';
+import { ApiService } from 'app/services/api.service';
 import { ActivatedRoute } from '@angular/router';
+import { SupplierService } from 'app/services/supplier.service';
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
@@ -17,7 +18,7 @@ export class AddProductComponent implements OnInit {
   product_edit_id : Number;
   isUpdate=false;
   product_description : string;
-  constructor(private api : ApiService,  private route : ActivatedRoute) { 
+  constructor(private api : ApiService,  private route : ActivatedRoute, private SupplierService : SupplierService) { 
     this.route.params.subscribe(params =>{
       this.product_edit_id=params['product_id'];
       if(this.product_edit_id)
@@ -42,7 +43,7 @@ export class AddProductComponent implements OnInit {
     
   }
   getCategories(){
-    this.api.getCategories().subscribe( responseData =>{
+    this.SupplierService.getCategories().subscribe( responseData =>{
       console.log(responseData);
       this.category=responseData[0].category_name;
       this.categories=responseData;
@@ -51,7 +52,7 @@ export class AddProductComponent implements OnInit {
     });
   }
   getProductDetailsForUpdate(){
-      this.api.getSupplierProduct(this.product_edit_id).subscribe(responseData =>{
+      this.SupplierService.getSupplierProduct(this.product_edit_id).subscribe(responseData =>{
         console.log(responseData);
        this.category=responseData.category.category_name;
        this.product_name =responseData.prod_name;
@@ -73,7 +74,7 @@ export class AddProductComponent implements OnInit {
     var num=new Number(this.quantity);
     if(this.isUpdate){
       var id= new Number(this.product_edit_id);
-      this.api.UpdateSupplierProduct(id.toString(),this.product_name,this.category,this.price,this.Image,this.supplier_id,num.toString(),this.product_description).subscribe(data =>{
+      this.SupplierService.UpdateSupplierProduct(id.toString(),this.product_name,this.category,this.price,this.Image,this.supplier_id,num.toString(),this.product_description).subscribe(data =>{
         console.log(data);
        alert("Product updated Successfully");
 
@@ -84,7 +85,7 @@ export class AddProductComponent implements OnInit {
       console.log("YES");
     }
     else{
-      this.api.addOneProduct(this.product_name,this.category,this.price,this.Image,this.supplier_id,num.toString(),this.product_description).subscribe( data=>{
+      this.SupplierService.addOneProduct(this.product_name,this.category,this.price,this.Image,this.supplier_id,num.toString(),this.product_description).subscribe( data=>{
         console.log(data);
         alert(this.product_name +" added successfully");
         this.reset();

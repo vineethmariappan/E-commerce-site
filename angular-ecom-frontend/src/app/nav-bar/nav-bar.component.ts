@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from 'app/api.service';
+import { ApiService } from 'app/services/api.service';
+import { SupplierService } from 'app/services/supplier.service';
+import { TokenAuthService } from 'app/services/token-auth.service';
 
 
 @Component({
@@ -15,7 +17,7 @@ export class NavBarComponent implements OnInit {
   }
   log : boolean;
   isSupplier : boolean;
-  constructor(private router: Router, private api : ApiService){
+  constructor(private router: Router, private api : ApiService,private tokenAuth : TokenAuthService, private SupplierService : SupplierService){
     
   }
 
@@ -29,10 +31,10 @@ export class NavBarComponent implements OnInit {
   }
   ngOnInit(): void {
     
-    this.api.checkToken();
-    this.api.loginEmitter.subscribe(login =>{ // changes nav bar when user logs in or out
+    this.tokenAuth.checkToken();
+    this.tokenAuth.loginEmitter.subscribe(login =>{ // changes nav bar when user logs in or out
       this.log=login;
-      if(this.api.checkSupplier())
+      if(this.SupplierService.checkSupplier())
         this.isSupplier=true;
       else
         this.isSupplier=false;

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
+from django.db.models import Sum
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -150,12 +151,11 @@ class Product_Review_Viewset(viewsets.ModelViewSet):
             return HttpResponse({'message' : 'review saved'},status=200)
 
     def update(self, request, pk=None):
-            print('update')
             User=get_user_model()
             cust_id = User.objects.get(email=request.data['email'])
             product_id= Product_detail.objects.get(product_id=request.data['id'])
-            Product_reviews.objects.filter(customer_id__email=cust_id).update(product_id=product_id,customer_id=cust_id,rating=request.data['rating'],review_title=request.data['review_title'],review_des=request.data['review_desc'])
-            return HttpResponse({'message' : 'review updated'},status=200)
+            Product_reviews.objects.filter(customer_id__email=cust_id,product_id__product_id=request.data['id']).update(product_id=product_id,customer_id=cust_id,rating=request.data['rating'],review_title=request.data['review_title'],review_des=request.data['review_desc'])
+            return Response({'message' : 'review updated'},status=200)
 
 @api_view(['GET','POST'])
 def find_user(request,email): #returns the id of the given email
@@ -251,14 +251,14 @@ def get_reviews(request,product_id):
     except:
         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
     return HttpResponse({'message' : 'reviews sent'},status=200)
-@api_view(['GET'])
-def get_user_review(request,email):
+@api_view(['POST'])
+def get_user_review(request):
     User=get_user_model()
     try:
-        cust=User.objects.get(email=email)
+        cust=User.objects.get(email=request.data['email'])
         product_review=Product_reviews.objects.all()
-        product_review=product_review.filter(customer_id=cust)
-        print(product_review)
+        prod=Product_detail.objects.get(product_id=request.data['product_id'])
+        product_review=product_review.filter(customer_id=cust,product_id=prod)
         serializer=Product_reviews_Serializer(product_review,many=True)
         return Response(serializer.data)
     except:
@@ -270,7 +270,7 @@ def check_token(request,data):
     try:
         data_arr = data.split(',')
         token_data = {'token': data_arr[0]}
-        print(token_data)
+        # print(token_data)
         user_client=User.objects.get(email=data_arr[1])
         user = Token.objects.get(key=data_arr[0]).user
         if(user==user_client):
@@ -292,5 +292,17 @@ def can_user_rate(request):
             # print("FAIL")
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response({'message' : 'can rate'},status=200)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def get_product_rating(request,prod_id):
+    try:
+        prod=Product_detail.objects.get(product_id=prod_id)
+        reviews=Product_reviews.objects.all()
+        reviews=reviews.filter(product_id=prod)
+        cnt=reviews.count()
+        sum_of_stars=reviews.aggregate(Sum('rating'))['rating__sum']
+        return Response({'sum_of_stars' : sum_of_stars, 'count' : cnt},status=200)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
